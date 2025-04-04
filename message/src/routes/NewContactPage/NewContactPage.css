@@ -1,0 +1,52 @@
+.new-contact{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.new-contact__search{
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  margin-top: 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: var(--primary-color);
+}
+.new-contact__search:active{
+  background-color: #78a924;
+  color: var(--font-color);
+}
+.new-contact__back-button{
+  margin-bottom: 40px;
+}
+.search-contact{
+  padding: 1rem;
+  border: none;
+}
+
+
+.card{
+  max-width: 400px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.card__avatar{
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.list__item{
+  margin-bottom: 16px;
+}
+
+@media screen and (min-width: 768px){
+  .card__avatar{
+    width: 100px;
+    height: 100px;
+  }
+}

@@ -1,0 +1,29 @@
+.about-content{
+  margin-top: 230px;
+  flex-grow: 1;
+
+  & h2{
+    margin-bottom: 20px;
+    position: fixed;
+    background-color: var(--tertiary-color);
+    width: 85%;
+    padding: 10px;
+  }
+}
+.about-content__messages{
+
+  margin-top: 70px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.about-content__message{
+  padding: 20px;
+  border-radius: 20px;
+  background-color: var(--message-color);
+}
+.about-content_time{
+  color: var(--quinary-color);
+  font-size: 0.9rem;
+  text-align: right;
+}

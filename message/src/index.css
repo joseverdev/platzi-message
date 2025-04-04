@@ -1,0 +1,105 @@
+*,
+*::before,
+*::after {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+:root{
+  --primary-color: #98ca3f;
+  --secondary-color: #1088d2;
+  --tertiary-color: #121f3d;
+  --message-color: #182c57;
+
+  --background-color: #272a37;
+
+  --quaternary-color: #273b47;
+  --quinary-color: #a5bcca;
+
+  --font-color: #f3f3f3;
+
+  /* chat color */
+}
+
+
+html{
+  font-family: "Poppins", sans-serif;
+  color: var(--font-color);
+  font-size: 14px;
+  background-color: var(--tertiary-color);
+  height: 100vh;
+}  
+
+ul{
+  list-style: none;
+}
+
+h2{
+  font-size: 1.3rem;
+}
+
+button,
+input{
+  font-family: 'Poppins', sans-serif;
+}
+button{
+/* cursor: pointer; */
+  user-select: none;
+}
+a{
+  text-decoration: none;
+  color: inherit;
+}
+
+
+.shadow{
+  box-shadow: 0px 4px 15px 12px var(--tertiary-color);
+}
+.light-shadow{
+  box-shadow: 0px 3px 5px rgb(0, 0, 0, 0.1) ;
+
+}
+
+.icon{
+  color: var(--font-color)
+}
+.button{
+  background: none;
+  border-radius: 18px;
+  height: 50px;
+  width: 50px;
+  border: 1px solid var(--secondary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.button:active{
+  background-color: var(--secondary-color);
+}
+
+
+.chat__message{
+  padding: 20px;
+  box-shadow: 0px 3px 5px rgb(0, 0, 0, 0.1) ;
+}
+.chat__message-time{
+  font-size: 0.9rem;
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+}
+.chat__message-time{
+  display: flex;
+
+  & img{
+    width: 20px;
+    border-radius: 50%;
+  }
+}
+.chat__send-time{
+  justify-content: flex-end;
+}
+.chat__message-name{
+  font-weight: 600;
+}

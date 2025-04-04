@@ -1,0 +1,16 @@
+.main-layout{
+  max-width: 600px;
+  display: flex;
+  margin: auto;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+@media screen and (min-width: 1200px){
+  .main-layout{
+    max-width: 720px;
+  }
+  
+}
