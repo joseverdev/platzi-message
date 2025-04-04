@@ -1,0 +1,106 @@
+h1{
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+.register-form__input,
+.login-form__input{
+  width: 100%;
+  padding: 15px 10px; 
+  border-radius: 10px;
+  border: none  ;
+  margin-bottom: 10px ;
+  outline: none;
+}
+
+.register-form__input:focus,
+.login-form__input:focus{
+  outline: 2px solid var(--secondary-color);
+}
+.checkbox-container input,
+.checkbox-container label{
+  display: inline-block;
+  margin: 4px 5px;
+}
+.checkbox-container {
+  text-align: left;
+}
+
+label{
+  display: block;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+
+.login-header{
+  align-self: flex-start;
+  background-color: var(--tertiary-color);
+  padding: 40px 0px;
+
+  & p{
+    color: var(--quinary-color);
+  }
+}
+.login-header__title{
+  color: var(--font-color);
+  font-size: 1.5rem;
+}
+.login-form{
+ 
+}
+
+.login-button{
+  cursor: pointer;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 15px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.login-button__login{
+  background-color: var(--primary-color);
+  color: var(--tertiary-color);
+}
+.login-button__login:active{
+  background-color: #78a924;
+  color: var(--font-color);
+  transition: all 0.2s ease;
+}
+.login-button__register{
+  background-color: transparent;
+  border: 1px solid var(--secondary-color);
+  color: var(--secondary-color);
+}
+.login-button__register:active{
+  background-color: var(--secondary-color);
+  color: var(--font-color);
+  transition: all 0.2s ease;
+}
+
+
+.login{
+  margin: auto;
+}
+
+.login-container{
+  /* margin: auto; */
+  max-width: 600px;
+}
+
+
+.none{
+  display: none;
+}
+
+.register-form__input--error{
+  outline: 2px solid red;
+}
+
+.error__text{
+  color: red;
+  font-size: 0.9rem;
+}
+
+

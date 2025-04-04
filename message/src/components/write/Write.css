@@ -1,0 +1,53 @@
+.write__container{
+  padding: 10px 0px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 720px;
+  background-color: var(--tertiary-color);
+  z-index: 1000;
+
+  & input{
+    width: 100%;
+    margin: 0;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 2px solid var(--secondary-color);
+    background-color: var(--message-color);
+    color: var(--font-color);
+    font-size: 1rem;
+    outline: none;
+    
+  }
+
+  & input::placeholder{
+    color: var(--quinary-color);
+  }
+  & input:focus{
+    box-shadow: 0px 1px 3px var(--secondary-color);
+
+  }
+
+}
+
+.write__send{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--secondary-color);
+  border-radius: 20px;
+  height: 50px;
+  min-width: 50px;
+}
+hr{
+  margin: 20px auto;
+  border: 0;
+  height: 2px;
+  background-color: var(--quaternary-color);
+}
