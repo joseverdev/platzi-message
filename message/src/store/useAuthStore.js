@@ -25,13 +25,13 @@ export const useAuthStore = create((set, get) => ({
     try {
       const res = await axiosInstance.post('/auth/login', data);
       const { user, token } = res.data;
-      localStorage.setItem('token', token);
+      document.cookie = `jwt_chat=${token}; max-age=604800; path=/;`;
       axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       set({ user });
       toast.success('Sesion iniciada correctamente');
     } catch (error) {
       set({ user: null });
-      localStorage.removeItem('token');
+      document.cookie = "jwt_chat=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       toast.error('Usuario o contraseña incorrectos');
       console.log('Error in login', error);
     } finally {
@@ -74,10 +74,15 @@ export const useAuthStore = create((set, get) => ({
   },
   checkAuth: async () => {
     set({ isChekingAuth: true });
-    const token = localStorage.getItem('token');
+    console.log('cookies', document.cookie.split('; '));
 
+    const token = await document.cookie
+      .split('; ')
+      .find((row) => row.startsWith('jwt_chat'))
+      ?.split('=')[1];
+    console.log('checkAuth token', token);
     if (!token) {
-      set({ user: null, isChekingAuth: false });
+      set({ user: null, isChecingAuth: false });
       return;
     }
 
@@ -87,11 +92,11 @@ export const useAuthStore = create((set, get) => ({
       set({ user: res.data });
     } catch (error) {
       set({ user: null });
-      localStorage.removeItem('token');
+      document.cookie = "jwt_chat=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       delete axiosInstance.defaults.headers.common['Authorization'];
       console.log('Error in checkAuth', error);
     } finally {
-      set({ isChekingAuth: false });
+      set({ isChecingAuth: false });
     }
   },
 
