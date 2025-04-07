@@ -17,7 +17,13 @@ const httpServer = createServer(app);
 // Socket.IO setup with CORS
 const io = new Server(httpServer, {
   cors: {
-    origin: 'http://localhost:5173',
+    origin: (origin, callback) => {
+      if (origin === 'https://platzi-message.onrender.com' || origin === 'http://localhost:5173') {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     methods: ['GET', 'POST'],
     credentials: true
   },
@@ -29,7 +35,7 @@ app.use(express.urlencoded({ extended: true, limit: '5mb' }));
 app.use(cookieParser());
 app.use(morgan('dev'));
 
-const whiteList = ['http://localhost:5173'];
+const whiteList = ['http://localhost:5173', 'https://platzi-message.onrender.com'];
 const options = {
   origin: (origin, callback)=> {
     if(whiteList.includes(origin)||!origin){
