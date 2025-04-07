@@ -24,6 +24,7 @@ router.get('/chat/:userId',
   async (req, res) => {
     try {
       const { userId } = req.params;
+      console.log('userId', userId);
       const chatList = await messageService.findByUser(userId);
       res.json(chatList);
     } catch (error) {
