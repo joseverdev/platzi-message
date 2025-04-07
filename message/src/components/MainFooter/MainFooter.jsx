@@ -4,7 +4,7 @@ function MainFooter() {
   return (
     <>
       <p style={{ textAlign: "center" }}>
-        Hecho con amor por un Platzinauta 💚
+        @joseverdev 💚
       </p>
     </>
   );
