@@ -20,7 +20,7 @@ function Messages() {
       })
       .catch(error => {
         console.log('Error in Messages', error);
-      })  
+      })
   }, [user.user_id]);
 
 
@@ -28,9 +28,12 @@ function Messages() {
   return (
     <section className="messages-container">
 
-      {chatList?.map((chat) => (
-        <Message key={chat.other_user_id} user={chat} text={chat.text} className={user.user_id !== chat.last_sender_id ? 'message-received' : ''} onClick={() => navigateToView(`/chat/${chat.other_user_id}`)}/>
-      ))}
+      {
+        chatList?.length > 0 ? chatList.map((chat) => (
+          <Message key={chat.other_user_id} user={chat} text={chat.text} className={user.user_id !== chat.last_sender_id ? 'message-received' : ''} onClick={() => navigateToView(`/chat/${chat.other_user_id}`)} />
+        ))
+          : <p className="empty-list">¡Aún no tienes mensajes! <br /> Empieza una conversación y conéctate con tus amigos.</p>
+      }
 
     </section>
   );
