@@ -41,7 +41,12 @@
 }
 
 .list__item{
+  cursor: pointer;
   margin-bottom: 16px;
+}
+.list__item:hover{
+  background-color: var(--primary-07-color);
+  color: var(--font-color);
 }
 
 @media screen and (min-width: 768px){

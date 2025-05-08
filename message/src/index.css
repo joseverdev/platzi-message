@@ -8,6 +8,7 @@
 
 :root{
   --primary-color: #98ca3f;
+  --primary-07-color: rgb(138, 185, 57,.7);
   --secondary-color: #1088d2;
   --tertiary-color: #121f3d;
   --message-color: #182c57;
