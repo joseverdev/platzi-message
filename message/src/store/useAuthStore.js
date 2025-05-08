@@ -15,8 +15,17 @@ export const useAuthStore = create((set, get) => ({
       const res = await axiosInstance.post('/auth/signup', data);
       console.log(res.data);
       set({ user: res.data });
+      return {
+        error: false,
+        message: 'Usuario creado con exito',
+        data: res.data
+      };
     } catch (error) {
       console.log('Error in register', error);
+      return {
+        error: true,
+        message: error.response.data
+      };
     }
   },
 
@@ -50,14 +59,14 @@ export const useAuthStore = create((set, get) => ({
 
     }
   },
-  updateName: async(data)=>{
-    const {user} = get() 
+  updateName: async (data) => {
+    const { user } = get()
     const name = data.name
     try {
-      const res = await axiosInstance.patch('/users/'+user.user_id,{
+      const res = await axiosInstance.patch('/users/' + user.user_id, {
         name
       })
-      
+
       return res
     } catch (error) {
       console.log('Error in updateName', error);
@@ -68,7 +77,7 @@ export const useAuthStore = create((set, get) => ({
       const res = await axiosInstance.get('/users');
       // console.log(res.data);
       set({ users: res.data });
-    } catch (error) { 
+    } catch (error) {
       console.log('Error in getAllUsers', error);
     }
   },

@@ -21,7 +21,7 @@ authRouter.post('/signup',
 
       const userExist = await authService.find(bodyLoweCase.username);
       if (userExist) {
-        return res.status(409).json('User already exist');
+          return res.status(409).json('El usuario ya existe');
       }
 
       const newUser = await authService.create(bodyLoweCase);
