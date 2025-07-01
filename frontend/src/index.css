@@ -13,7 +13,7 @@
   --tertiary-color: #121f3d;
   --message-color: #182c57;
 
-  --background-color: #272a37;
+  --bg: #1a1a1a;
 
   --quaternary-color: #273b47;
   --quinary-color: #a5bcca;
@@ -28,7 +28,7 @@ html{
   font-family: "Poppins", sans-serif;
   color: var(--font-color);
   font-size: 14px;
-  background-color: var(--tertiary-color);
+  background-color: var(--bg);
   height: 100vh;
 }  
 
