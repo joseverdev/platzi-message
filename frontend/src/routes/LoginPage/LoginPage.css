@@ -1,23 +1,24 @@
-h1{
+h1 {
   font-size: 2.5rem;
   margin-bottom: 10px;
 }
 .register-form__input,
-.login-form__input{
+.login-form__input {
   width: 100%;
-  padding: 15px 10px; 
-  border-radius: 10px;
-  border: none  ;
-  margin-bottom: 10px ;
-  outline: none;
+  padding: 1rem 1.5rem;
+  border: 1px solid var(--border-gray);
+  border-radius: 6px;
+  background-color: var(--bg-gray);
+  margin-bottom: 1rem;
+  color: var(--font-color);
 }
 
 .register-form__input:focus,
-.login-form__input:focus{
+.login-form__input:focus {
   outline: 2px solid var(--secondary-color);
 }
 .checkbox-container input,
-.checkbox-container label{
+.checkbox-container label {
   display: inline-block;
   margin: 4px 5px;
 }
@@ -25,82 +26,100 @@ h1{
   text-align: left;
 }
 
-label{
+label {
+  font-weight: 500;
+  text-align: left;
   display: block;
   margin-bottom: 4px;
   cursor: pointer;
 }
 
-.login-header{
+.login-header {
   align-self: flex-start;
-  background-color: var(--tertiary-color);
   padding: 40px 0px;
 
-  & p{
+  & p {
     color: var(--quinary-color);
   }
 }
-.login-header__title{
+.login-header__title {
   color: var(--font-color);
   font-size: 1.5rem;
 }
-.login-form{
- 
-}
 
-.login-button{
+.login-button {
   cursor: pointer;
   width: 100%;
-  padding: 10px;
+  padding: 1rem;
+  color: var(--font-color);
   border: none;
-  border-radius: 10px;
+  border-radius: 6px;
   margin-top: 15px;
   font-size: 1rem;
   font-weight: 600;
 }
 
-.login-button__login{
+.login-button__login {
   background-color: var(--primary-color);
-  color: var(--tertiary-color);
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
 }
-.login-button__login:active{
+.login-button__login:active {
   background-color: #78a924;
   color: var(--font-color);
   transition: all 0.2s ease;
 }
-.login-button__register{
+.login-button__register {
   background-color: transparent;
   border: 1px solid var(--secondary-color);
   color: var(--secondary-color);
 }
-.login-button__register:active{
+.login-button__register:active {
   background-color: var(--secondary-color);
   color: var(--font-color);
   transition: all 0.2s ease;
 }
 
-
-.login{
+.login {
   margin: auto;
+  text-align: center;
 }
 
-.login-container{
-  /* margin: auto; */
+.login-container {
   max-width: 600px;
+  border: 1px solid var(--border-gray);
+  border-radius: 8px;
+  padding: 2rem;
+  background-color: var(--bg-gray);
+  box-shadow: 0px 12px 24px 11px rgb(0, 0, 0, 0.2);
 }
 
-
-.none{
+.none {
   display: none;
 }
 
-.register-form__input--error{
+.register-form__input--error {
   outline: 2px solid red;
 }
 
-.error__text{
+.error__text {
   color: red;
   font-size: 0.9rem;
 }
 
+.input-container {
+  position: relative;
+  width: 100%;
+}
 
+.input-icon {
+  position: absolute;
+  left: 15px;
+  top: 40%;
+  transform: translateY(-50%);
+  color: var(--quinary-color);
+  z-index: 1;
+}
+
+.login-form__input--with-icon {
+  padding-left: 50px;
+}

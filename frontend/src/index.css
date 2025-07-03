@@ -7,13 +7,16 @@
 }
 
 :root{
-  --primary-color: #98ca3f;
+  --primary-color: #2746a9;
   --primary-07-color: rgb(138, 185, 57,.7);
-  --secondary-color: #1088d2;
+  --secondary-color: #059669;
   --tertiary-color: #121f3d;
   --message-color: #182c57;
 
-  --bg: #1a1a1a;
+  --border-gray: #3b434c;
+  --bg-gray: #3b434c25;
+
+ 
 
   --quaternary-color: #273b47;
   --quinary-color: #a5bcca;
@@ -28,7 +31,9 @@ html{
   font-family: "Poppins", sans-serif;
   color: var(--font-color);
   font-size: 14px;
-  background-color: var(--bg);
+  background: linear-gradient(135deg, #101828 0%, #1d293d 100%);
+
+  
   height: 100vh;
 }  
 

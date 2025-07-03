@@ -2,15 +2,65 @@ import { create } from 'zustand';
 import { axiosInstance } from '../utils/axios.js';
 import toast from 'react-hot-toast';
 
+// Mock user data for development
+const MOCK_USER = {
+  user_id: 1,
+  username: "testuser",
+  name: "Usuario Test",
+  email: "test@example.com",
+  profilePic: null,
+  created_at: new Date().toISOString()
+};
+
 export const useAuthStore = create((set, get) => ({
 
   user: null,
   users: [],
   isChekingAuth: false,
   isLogin: false,
+  isDevelopment: process.env.NODE_ENV === 'development', // Flag para desarrollo
 
+  // Mock login function for development
+  mockLogin: () => {
+    set({ isLogin: true });
+    setTimeout(() => {
+      set({ user: MOCK_USER, isLogin: false });
+      toast.success('Mock login successful!');
+    }, 500); // Simula un delay de red
+  },
+
+  // Mock signup function for development
+  mockSignup: (data) => {
+    const mockUser = {
+      ...MOCK_USER,
+      username: data.username || "testuser",
+      name: data.name || "Usuario Test",
+      email: data.email || "test@example.com"
+    };
+    
+    set({ user: mockUser });
+    toast.success('Mock signup successful!');
+    return {
+      error: false,
+      message: 'Usuario creado con exito (mock)',
+      data: mockUser
+    };
+  },
+
+  // Mock checkAuth function
+  mockCheckAuth: () => {
+    set({ isChekingAuth: true });
+    setTimeout(() => {
+      set({ user: MOCK_USER, isChekingAuth: false });
+    }, 300);
+  },
 
   signup: async (data) => {
+    // Use mock in development
+    if (get().isDevelopment && window.location.search.includes('mock=true')) {
+      return get().mockSignup(data);
+    }
+
     try {
       const res = await axiosInstance.post('/auth/signup', data);
       console.log(res.data);
@@ -30,6 +80,12 @@ export const useAuthStore = create((set, get) => ({
   },
 
   login: async (data) => {
+    // Use mock in development
+    if (get().isDevelopment && window.location.search.includes('mock=true')) {
+      get().mockLogin();
+      return;
+    }
+
     set({ isLogin: true });
     try {
       const res = await axiosInstance.post('/auth/login', data);
@@ -82,6 +138,12 @@ export const useAuthStore = create((set, get) => ({
     }
   },
   checkAuth: async () => {
+    // Use mock in development
+    if (get().isDevelopment && window.location.search.includes('mock=true')) {
+      get().mockCheckAuth();
+      return;
+    }
+
     set({ isChekingAuth: true });
     console.log('cookies', document.cookie.split('; '));
 

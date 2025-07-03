@@ -1,11 +1,13 @@
 import React from "react";
-import { Search } from "../Search/Search";
+import { Search } from "../molecules/Search/Search";
 import "./MainHeader.css";
 
 import { AddIcon } from "../Icons/AddIcon";
 import { useAnimateButtons } from "../../routes/useAnimateButtons";
 import { useAuthStore } from "../../store/useAuthStore";
+// import Input from ''
 import astronauta from "../../assets/images/astronauta.png";
+
 
 function MainHeader() {
   const { navigateToView } = useAnimateButtons();
@@ -28,6 +30,7 @@ function MainHeader() {
           </article>
         </section>
         <Search />
+        {/* <Input /> */}
       </header>
     </>
   );

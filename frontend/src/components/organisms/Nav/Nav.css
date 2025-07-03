@@ -1,0 +1,16 @@
+.navbar-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.navbar {
+  width: 100%;
+}
+
+.navbar__list {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 4rem;
+}

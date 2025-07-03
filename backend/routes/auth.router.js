@@ -9,7 +9,8 @@ const { jwtSecret } = require('../config/config');
 const jwt = require('jsonwebtoken');
 const authService = new AuthService();
 
-authRouter.post('/signup',
+authRouter.post(
+  '/signup',
   validatorHandler(createUserSchema, 'body'),
   async (req, res, next) => {
     try {
@@ -17,11 +18,11 @@ authRouter.post('/signup',
       const bodyLoweCase = {
         ...body,
         username: req.body.username.toLowerCase(),
-      }
+      };
 
       const userExist = await authService.find(bodyLoweCase.username);
       if (userExist) {
-          return res.status(409).json('El usuario ya existe');
+        return res.status(409).json('El usuario ya existe');
       }
 
       const newUser = await authService.create(bodyLoweCase);
@@ -29,9 +30,11 @@ authRouter.post('/signup',
     } catch (error) {
       next(error);
     }
-  });
+  },
+);
 
-authRouter.post('/login',
+authRouter.post(
+  '/login',
   passport.authenticate('local', { session: false }),
   async (req, res, next) => {
     try {
@@ -39,22 +42,24 @@ authRouter.post('/login',
       const payload = {
         sub: user.id,
         username: user.username,
-      }
+      };
 
       const token = jwt.sign(payload, jwtSecret);
 
       res.cookie('jwt_chat', token, {
         maxAge: 1000 * 60 * 60 * 24 * 7,
         // httpOnly: true,
-      })
+      });
 
       res.json({ user, token });
     } catch (error) {
       next(error);
     }
-  });
+  },
+);
 
-authRouter.put('/update-profile',
+authRouter.put(
+  '/update-profile',
   passport.authenticate('jwt', { session: false }),
   async (req, res, next) => {
     try {
@@ -63,17 +68,17 @@ authRouter.put('/update-profile',
       const response = await authService.updateProfile(profilePic, req.user);
 
       res.json(response);
-
     } catch (error) {
       console.log('Error in /update-profile router file', error);
       next(error);
     }
-  }
-)
+  },
+);
 
-authRouter.get('/check',
+authRouter.get(
+  '/check',
   // passport.authenticate('jwt', { session: false }),
-  async(req, res) => {
+  async (req, res) => {
     try {
       const token = req.cookies.jwt_chat;
       const payload = jwt.verify(token, jwtSecret);
@@ -87,6 +92,7 @@ authRouter.get('/check',
       console.log('Error in /check router file', error);
       res.status(401).json('Unauthorized');
     }
-  });
+  },
+);
 
 module.exports = authRouter;

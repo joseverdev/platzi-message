@@ -1,6 +1,6 @@
 import React from "react";
 import "./Search.css";
-import { SearchIcon } from "../Icons/SearchIcon";
+import { SearchIcon } from "../../Icons/SearchIcon";
 function Search() {
   return (
     <>
