@@ -1,23 +1,24 @@
 import React from 'react';
+import { LucideIcon } from 'lucide-react';
 
 interface InputProps {
-  Icon?: import('lucide-react').LucideIcon;
-  label: string;
+  Icon?: LucideIcon;
+  label?: string;
   value: string;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
 }
 
-const Input: React.FC<InputProps> = ({
+export const Input = ({
   Icon,
   label,
   value,
   handleChange,
   placeholder,
-}) => {
+}: InputProps) => {
   return (
     <>
-      <label htmlFor={label}>{label}</label>
+      {label && <label htmlFor={label}>{label}</label>}
       <div className="input-container">
         {Icon && <Icon className="input-icon" size={20} />}
         <input
@@ -32,5 +33,3 @@ const Input: React.FC<InputProps> = ({
     </>
   );
 };
-
-export default Input;

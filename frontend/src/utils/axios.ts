@@ -1,11 +1,11 @@
-import axios from 'axios';
+import axios from "axios";
 
 export const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_BASE_URL,
+  baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
 });
 
-axiosInstance.interceptors.request.use(config => {
+axiosInstance.interceptors.request.use((config) => {
   const chatCookie = document.cookie.replace(
     /(?:(?:^|.*;\s*)jwt_chat\s*=\s*([^;]*).*$)|^.*$/,
     "$1"

@@ -1,28 +1,27 @@
-import React from 'react';
+import { useState } from 'react';
 import { User, Lock } from 'lucide-react';
-
-import './LoginPage.css';
+import { useNavigate } from 'react-router-dom';
+import './index.css';
 import { MainLayout } from '../../components/MainLayout/MainLayout';
-import { useAnimateButtons } from '../useAnimateButtons';
 import { useAuthStore } from '../../store/useAuthStore';
 import { Toaster } from 'react-hot-toast';
-import Input from '../../components/molecules/Input/Input';
+import { Input } from '../../components/molecules/Input';
+import type { LoginFormData } from '../../store/useAuthStore';
 
 function LoginPage() {
-  const { navigateToView } = useAnimateButtons();
+  const navigate = useNavigate();
   const { login, mockLogin, isDevelopment } = useAuthStore();
 
-  const [formData, setFormData] = React.useState({
-    username: '',
+  const [formData, setFormData] = useState<LoginFormData>({
+    email: '',
     password: '',
   });
 
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log('login');
 
     login(formData);
-    navigateToView('/home');
+    navigate('/chat');
   }
 
   return (
@@ -40,10 +39,10 @@ function LoginPage() {
                 <Input
                   Icon={User}
                   label={'Correo electronico'}
-                  value={formData.username}
+                  value={formData.email}
                   placeholder="Escribe tu correo"
                   handleChange={(e) =>
-                    setFormData({ ...formData, username: e.target.value })
+                    setFormData({ ...formData, email: e.target.value })
                   }
                 />
                 <Input
@@ -70,7 +69,7 @@ function LoginPage() {
               <p>¿No tienes una cuenta ? Registrate!</p>
               <button
                 type="submit"
-                onClick={() => navigateToView('/signup')}
+                onClick={() => navigate('/signup')}
                 className="login-button login-button__register"
               >
                 Crear cuenta
@@ -82,7 +81,7 @@ function LoginPage() {
                   type="button"
                   onClick={() => {
                     mockLogin();
-                    navigateToView('/home');
+                    navigate('/chat');
                   }}
                   style={{
                     background: '#ff6b6b',

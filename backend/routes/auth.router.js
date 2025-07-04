@@ -15,17 +15,18 @@ authRouter.post(
   async (req, res, next) => {
     try {
       const body = req.body;
-      const bodyLoweCase = {
-        ...body,
-        username: req.body.username.toLowerCase(),
-      };
-
-      const userExist = await authService.find(bodyLoweCase.username);
+      body.email = body.email.toLowerCase();
+      const userExist = await authService.findByEmail(body.email);
       if (userExist) {
-        return res.status(409).json('El usuario ya existe');
+        return res
+          .status(409)
+          .json({
+            message:
+              'Este correo electrónico ya está en uso. Por favor, utiliza otro.',
+          });
       }
 
-      const newUser = await authService.create(bodyLoweCase);
+      const newUser = await authService.create(body);
       res.status(201).json(newUser);
     } catch (error) {
       next(error);
@@ -41,7 +42,8 @@ authRouter.post(
       const user = req.user;
       const payload = {
         sub: user.id,
-        username: user.username,
+        email: user.email,
+        name: user.fullname,
       };
 
       const token = jwt.sign(payload, jwtSecret);

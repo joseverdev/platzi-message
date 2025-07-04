@@ -5,24 +5,27 @@ const USER_TABLE = 'users';
 const UserSchema = {
   user_id: {
     allowNull: false,
-    autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.INTEGER,
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
   },
-  name: {
+  fullname: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  username: {
+  email: {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true,
+    validate: {
+      isEmail: true,
+    },
   },
   password: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  profilePic: {
+  avatar: {
     type: DataTypes.STRING,
     allowNull: true,
   },
@@ -31,7 +34,13 @@ const UserSchema = {
     type: DataTypes.DATE,
     field: 'created_at',
     defaultValue: Sequelize.NOW,
-  }
+  },
+  updatedAt: {
+    allowNull: false,
+    type: DataTypes.DATE,
+    field: 'updated_at',
+    defaultValue: Sequelize.NOW,
+  },
 };
 
 class User extends Model {

@@ -2,9 +2,9 @@ import "./HomePage.css";
 
 import { MainHeader } from "../../components/MainHeader/MainHeader";
 import { MainLayout } from "../../components/MainLayout/MainLayout";
-import { MainFooter } from "../../components/MainFooter/MainFooter";
-import { Messages } from "../../components/Messages/Messages";
-import Nav from "../../components/organisms/Nav/Nav";
+// import { MainFooter } from "../../components/MainFooter/MainFooter";
+import { Messages } from "../../components/Messages";
+import { Nav } from "../../components/organisms/Nav";
 
 function HomePage() {
   return (
@@ -15,7 +15,6 @@ function HomePage() {
           <Nav />
           <Messages />
         </main>
-        {/* <MainFooter /> */}
       </MainLayout>
     </>
   );
