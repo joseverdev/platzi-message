@@ -16,7 +16,7 @@ export type LoginFormData = {
 };
 
 interface User {
-  user_id: number;
+  user_id: string;
   username: string;
   name: string;
   email: string;

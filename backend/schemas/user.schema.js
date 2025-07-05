@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const id = Joi.number().integer();
+const id = Joi.string().guid({ version: ['uuidv4'] });
 const fullname = Joi.string().min(3).max(50);
 const password = Joi.string().min(8).max(50);
 const email = Joi.string().email().min(5).max(100);

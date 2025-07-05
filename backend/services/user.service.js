@@ -9,13 +9,13 @@ class UserService {
   async find() {
     console.log('find');
     const res = await models.User.findAll();
-    const users = res.map(user => {
+    const users = res.map((user) => {
       return user.dataValues;
-    })
+    });
     return users;
   }
 
-  async findOne(id) {
+  async findById(id) {
     const user = await models.User.findByPk(id);
     if (!user) {
       throw boom.notFound('user not found');

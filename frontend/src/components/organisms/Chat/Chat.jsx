@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
 import "./Chat.css";
 import christian from "../../assets/images/christian.jpg";
 import freddy from "../../assets/images/freddy.jpg";
-import { ChatReceived } from "../MessageReceived/MessageReceived";
-import { ChatSend } from "../MessageSend/MessageSend";
+import { ChatReceived } from "../../molecules/MessageReceived/MessageReceived";
+import { ChatSend } from "../../molecules/MessageSend/MessageSend";
 function Chat() {
   
   return (

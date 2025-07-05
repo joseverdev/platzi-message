@@ -18,12 +18,10 @@ authRouter.post(
       body.email = body.email.toLowerCase();
       const userExist = await authService.findByEmail(body.email);
       if (userExist) {
-        return res
-          .status(409)
-          .json({
-            message:
-              'Este correo electrónico ya está en uso. Por favor, utiliza otro.',
-          });
+        return res.status(409).json({
+          message:
+            'Este correo electrónico ya está en uso. Por favor, utiliza otro.',
+        });
       }
 
       const newUser = await authService.create(body);
@@ -41,7 +39,7 @@ authRouter.post(
     try {
       const user = req.user;
       const payload = {
-        sub: user.id,
+        sub: user.user_id,
         email: user.email,
         name: user.fullname,
       };

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 import './Messages.css';
-import { Message } from '../Message';
-import { axiosInstance } from '../../utils/axios';
-import { useAuthStore } from '../../store/useAuthStore';
+import { Message } from '../../molecules/Message';
+import { axiosInstance } from '../../../utils/axios';
+import { useAuthStore } from '../../../store/useAuthStore';
 import { useNavigate } from 'react-router-dom';
 import { UserRoundPlus } from 'lucide-react';
 

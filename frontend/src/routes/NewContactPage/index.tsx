@@ -1,4 +1,4 @@
-import { MainLayout } from '../../components/MainLayout/MainLayout';
+import { MainLayout } from '../../components/templates/MainLayout/MainLayout';
 
 import './NewContactPage.css';
 import { useEffect, useState } from 'react';
@@ -9,6 +9,7 @@ import { Search, UserPlus, Users } from 'lucide-react';
 import { Nav } from '@/components/organisms/Nav';
 import { useUsersStore } from '@/store/useUserStore';
 import { User } from '@/store/useUserStore';
+import { CardItem } from '@/components/molecules/cardItem';
 
 function NewContactPage() {
   const [search, setSearch] = useState('');
@@ -30,6 +31,11 @@ function NewContactPage() {
       user.fullname.toLowerCase().includes(search.toLowerCase())
     );
     setUsersFiltered(filteredUsers);
+  };
+
+  const hanldeAddContact = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    console.log('Agregar contacto');
   };
 
   useEffect(() => {
@@ -66,19 +72,10 @@ function NewContactPage() {
                       className="list__item"
                       // onClick={() => handleClickUser(user.user_id)}
                     >
-                      <article key={user.user_id} className="card">
-                        <img
-                          className="card__avatar"
-                          src={user.avatar || astronauta}
-                          alt={`${user.fullname} avatar`}
-                        />
-                        <div>
-                          <p>{user.fullname}</p>
-                        </div>
-                        <button className="card__button">
-                          <UserPlus size={18} />
-                        </button>
-                      </article>
+                      <CardItem
+                        user={user}
+                        handleClick={() => hanldeAddContact}
+                      />
                     </li>
                   ))
                 ) : (
@@ -92,20 +89,8 @@ function NewContactPage() {
                 <Users size={18} />
                 Usuarios sugeridos
               </p>
-              {usersStore.map((user) => (
-                <article key={user.user_id} className="card">
-                  <img
-                    className="card__avatar"
-                    src={user.avatar || astronauta}
-                    alt={`${user.fullname} avatar`}
-                  />
-                  <div>
-                    <p>{user.fullname}</p>
-                  </div>
-                  <button className="card__button">
-                    <UserPlus size={18} />
-                  </button>
-                </article>
+              {usersStore.slice(0, 4).map((user) => (
+                <CardItem user={user} handleClick={() => hanldeAddContact} />
               ))}
             </section>
           )}
@@ -116,3 +101,18 @@ function NewContactPage() {
 }
 
 export { NewContactPage };
+{
+  /* <article key={user.user_id} className="card">
+                  <img
+                    className="card__avatar"
+                    src={user.avatar || astronauta}
+                    alt={`${user.fullname} avatar`}
+                  />
+                  <div>
+                    <p>{user.fullname}</p>
+                  </div>
+                  <button onClick={hanldeAddContact} className="card__button">
+                    <UserPlus size={18} />
+                  </button>
+                </article> */
+}

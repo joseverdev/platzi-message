@@ -1,6 +1,6 @@
 import React from "react";
 import "./AboutContent.css";
-import { MessageReceived } from "../MessageReceived/MessageReceived";
+import { MessageReceived } from "../../MessageReceived/MessageReceived";
 
 function AboutContent() {
   return (

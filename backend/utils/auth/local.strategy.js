@@ -12,7 +12,7 @@ const LocalStrategy = new Strategy(
       const emailLower = email.toLowerCase();
 
       const user = await authService.findByEmail(emailLower);
-      console.log('🚀 ~ LocalStrategy ~ user:', user);
+      // console.log('🚀 ~ LocalStrategy ~ user:', user);
 
       if (!user) {
         return done(boom.unauthorized(), false);

@@ -10,22 +10,24 @@ const passport = require('passport');
 const router = express.Router();
 const service = new UserService();
 
-router.get('/',
+router.get(
+  '/',
   passport.authenticate('jwt', { session: false }),
   async (req, res, next) => {
     try {
       const users = await service.find();
 
-      const safeUsers = users.map(user => {
+      const safeUsers = users.map((user) => {
         delete user.password;
         return user;
-      })
+      });
 
       res.json(safeUsers);
     } catch (err) {
       next(err);
     }
-  });
+  },
+);
 
 router.get('/:id', validatorHandler(getUserSchema), async (req, res, next) => {
   try {
@@ -36,8 +38,6 @@ router.get('/:id', validatorHandler(getUserSchema), async (req, res, next) => {
     next(err);
   }
 });
-
-
 
 router.patch(
   '/:id',
@@ -51,7 +51,7 @@ router.patch(
       delete user.dataValues.password;
       res.json(user);
     } catch (err) {
-      console.log(err)
+      console.log(err);
       next(err);
     }
   },

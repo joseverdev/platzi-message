@@ -1,4 +1,4 @@
-import { MainLayout } from '../../components/MainLayout/MainLayout';
+import { MainLayout } from '../../components/templates/MainLayout/MainLayout';
 
 import './UserPage.css';
 import { useAuthStore } from '../../store/useAuthStore';

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { User, Lock } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import './index.css';
-import { MainLayout } from '../../components/MainLayout/MainLayout';
+import { MainLayout } from '../../components/templates/MainLayout/MainLayout';
 import { useAuthStore } from '../../store/useAuthStore';
 import { Toaster } from 'react-hot-toast';
 import { Input } from '../../components/molecules/Input';

@@ -4,7 +4,7 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import { axiosInstance } from "../utils/axios";
 
 export interface User {
-  user_id: number;
+  user_id: string;
   fullname: string;
   email: string;
   avatar: string | null;
@@ -21,12 +21,12 @@ interface UsersStore {
 
   // Acciones
   getAllUsers: () => Promise<void>;
-  getContacts: () => Promise<void>;
+  // getContacts: () => Promise<void>;
   searchUsers: (query: string) => User[];
-  addContact: (userId: number) => Promise<void>;
-  removeContact: (userId: number) => Promise<void>;
+  addContact: (userId: string) => Promise<void>;
+  removeContact: (userId: string) => Promise<void>;
   setSelectedUser: (user: User | null) => void;
-  updateUserStatus: (userId: number, isOnline: boolean) => void;
+  updateUserStatus: (userId: string, isOnline: boolean) => void;
 }
 
 export const useUsersStore = create<UsersStore>()(
@@ -50,17 +50,17 @@ export const useUsersStore = create<UsersStore>()(
         }
       },
 
-      getContacts: async () => {
-        set({ isLoading: true });
-        try {
-          const res = await axiosInstance.get("/users/contacts");
-          set({ contacts: res.data });
-        } catch (error) {
-          console.log("Error fetching contacts", error);
-        } finally {
-          set({ isLoading: false });
-        }
-      },
+      // getContacts: async () => {
+      //   set({ isLoading: true });
+      //   try {
+      //     const res = await axiosInstance.get("/users/contacts");
+      //     set({ contacts: res.data });
+      //   } catch (error) {
+      //     console.log("Error fetching contacts", error);
+      //   } finally {
+      //     set({ isLoading: false });
+      //   }
+      // },
 
       searchUsers: (query: string) => {
         const { users } = get();

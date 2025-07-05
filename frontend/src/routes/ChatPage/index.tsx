@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./ChatPage.css";
 
-import { MainLayout } from "../../components/MainLayout/MainLayout";
-import { ChatHeader } from "../../components/ChatHeader/ChatHeader";
-import { Write } from "../../components/write/Write";
+import { MainLayout } from "../../components/templates/MainLayout/MainLayout";
+import { ChatHeader } from "../../components/organisms/ChatHeader/ChatHeader";
+import { Write } from "../../components/molecules/write/Write";
 import { useParams } from "react-router-dom";
 import { useAuthStore } from "../../store/useAuthStore";
-import { MessageReceived } from "../../components/MessageReceived/MessageReceived";
-import { MessageSend } from "../../components/MessageSend/MessageSend";
+import { MessageReceived } from "../../components/molecules/MessageReceived/MessageReceived";
+import { MessageSend } from "../../components/molecules/MessageSend/MessageSend";
 import io from "socket.io-client";
 import { axiosInstance } from "../../utils/axios";
 

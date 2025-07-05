@@ -1,7 +1,7 @@
 import React from "react";
 import "./Write.css";
 import { SendIcon } from "../Icons/SendIcon";
-import { useAuthStore } from "../../store/useAuthStore";
+import { useAuthStore } from "../../../store/useAuthStore";
 
 function Write({userChat, socket}) {
   const [message, setMessage] = React.useState('');

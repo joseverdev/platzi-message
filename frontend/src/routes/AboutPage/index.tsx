@@ -1,7 +1,7 @@
 import React from "react";
-import { MainLayout } from "../../components/MainLayout/MainLayout";
+import { MainLayout } from "../../components/templates/MainLayout/MainLayout";
 import { AboutHeader } from "../../components/AboutHeader";
-import { AboutContent } from "../../components/AboutContent/AboutContent";
+import { AboutContent } from "../../components/organisms/AboutContent/AboutContent";
 
 function AboutPage() {
   return (

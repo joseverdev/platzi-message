@@ -2,8 +2,8 @@ import React from "react";
 import "./ChatHeader.css";
 
 import astronauta from "../../assets/images/astronauta.png";
-import { BackIcon } from "../Icons/Backicon";
-import { DotIcon } from "../Icons/DotsIcon";
+import { BackIcon } from "../../Icons/Backicon";
+import { DotIcon } from "../../Icons/DotsIcon";
 import { useNavigate } from "react-router-dom";
 
 function ChatHeader({ user }) {

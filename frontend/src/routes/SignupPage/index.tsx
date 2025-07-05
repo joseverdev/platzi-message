@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-import { MainLayout } from '../../components/MainLayout/MainLayout';
+import { MainLayout } from '../../components/templates/MainLayout/MainLayout';
 import './index.css';
 import { useAnimateButtons } from '../useAnimateButtons';
 import '../LoginPage/index.css';
