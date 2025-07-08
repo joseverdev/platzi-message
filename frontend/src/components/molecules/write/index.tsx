@@ -1,9 +1,9 @@
-import React from "react";
-import "./Write.css";
-import { SendIcon } from "../Icons/SendIcon";
-import { useAuthStore } from "../../../store/useAuthStore";
+import React from 'react';
+import './index.css';
+import { useAuthStore } from '../../../store/useAuthStore';
+import { Send } from 'lucide-react';
 
-function Write({userChat, socket}) {
+function Write({ userChat, socket }) {
   const [message, setMessage] = React.useState('');
 
   const { user } = useAuthStore();
@@ -15,11 +15,11 @@ function Write({userChat, socket}) {
       socket.volatile.emit('send_message', {
         from: {
           user_id: user.user_id,
-          username: user.username
+          username: user.username,
         },
         to: {
           user_id: userChat.user_id,
-          username: userChat.username
+          username: userChat.username,
         },
         message,
       });
@@ -27,14 +27,18 @@ function Write({userChat, socket}) {
     }
   };
 
-
   return (
     <section>
-      <article >
+      <article>
         <form onSubmit={handleSubmit} className="write__container">
-          <input type="text" value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Escribe aquí..." />
-          <button className="write__send button">
-            <SendIcon />
+          <input
+            type="text"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="Escribe aquí..."
+          />
+          <button className="write__send ">
+            <Send />
           </button>
         </form>
       </article>

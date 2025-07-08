@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import astronauta from '../../assets/images/astronauta.png';
+import astronauta from '@/assets/images/astronauta.png';
 
 import './AboutHeader.css';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAuthStore } from '../../store/useAuthStore';
+import { useAuthStore } from '@/store/useAuthStore';
 import { ArrowLeft } from 'lucide-react';
 
 function AboutHeader() {

@@ -1,8 +1,6 @@
 const { text } = require('express');
 const MessageService = require('../services/message.service');
 
-const messageService = new MessageService();
-
 const registerChatHandlers = (io) => {
   io.on('connection', (socket) => {
     console.log('A user connected');
@@ -20,16 +18,15 @@ const registerChatHandlers = (io) => {
         // Guardar el mensaje en la base de datos
 
         console.log({
-            text: data.message,
-            sender_id: data.from.user_id,
-            receiver_id: data.to.user_id
-          })
-
+          text: data.message,
+          sender_id: data.from.user_id,
+          receiver_id: data.to.user_id,
+        });
 
         await messageService.create({
           text: data.message,
           sender_id: data.from.user_id,
-          receiver_id: data.to.user_id
+          receiver_id: data.to.user_id,
         });
 
         const messageToSend = {
@@ -49,7 +46,7 @@ const registerChatHandlers = (io) => {
         console.error('Error saving message:', error);
         socket.emit('message_error', {
           error: 'Error saving message',
-          details: error.message
+          details: error.message,
         });
       }
     });

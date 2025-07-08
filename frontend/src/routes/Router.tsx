@@ -38,7 +38,7 @@ function Router() {
 
         <Route element={<ProtectedRoute />}>
           <Route path="/" element={<HomePage />} />
-          <Route path="/chat" element={<HomePage />} />
+          <Route path="/home" element={<HomePage />} />
           <Route path="/contactos" element={<Contacts />} />
           <Route path="/agregar" element={<NewContactPage />} />
           <Route path="/me" element={<UserPage />} />

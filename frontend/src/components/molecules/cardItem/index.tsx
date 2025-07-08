@@ -1,16 +1,18 @@
 import astronauta from '@/assets/images/astronauta.png';
-import { UserPlus } from 'lucide-react';
+import { LucideProps } from 'lucide-react';
+import './index.css';
 
 type CardItemProps = {
   user: {
     user_id: string;
     fullname: string;
-    avatar: string | null;
+    avatar?: string | null;
   };
-  handleClick: () => void;
+  handleClick?: () => void;
+  Icon: React.ComponentType<LucideProps>;
 };
 
-const CardItem = ({ user, handleClick }: CardItemProps) => {
+const CardItem = ({ user, handleClick, Icon }: CardItemProps) => {
   return (
     <article key={user.user_id} className="card">
       <img
@@ -22,7 +24,7 @@ const CardItem = ({ user, handleClick }: CardItemProps) => {
         <p>{user.fullname}</p>
       </div>
       <button onClick={handleClick} className="card__button">
-        <UserPlus size={18} />
+        <Icon size={18} />
       </button>
     </article>
   );

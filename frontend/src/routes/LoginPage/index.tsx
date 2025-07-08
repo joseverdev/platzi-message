@@ -21,7 +21,7 @@ function LoginPage() {
     e.preventDefault();
 
     login(formData);
-    navigate('/chat');
+    navigate('/home');
   }
 
   return (

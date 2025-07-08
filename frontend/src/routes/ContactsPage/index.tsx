@@ -3,18 +3,28 @@ import { Nav } from '@/components/organisms/Nav';
 import React, { useEffect } from 'react';
 import './index.css';
 import { Input } from '@/components/molecules/Input';
-import { Search } from 'lucide-react';
-import { useAuthStore } from '@/store/useAuthStore';
+import { MessageCircleMore, Search } from 'lucide-react';
 import { useContactsStore } from '@/store/useContactsStore';
+import { CardItem } from '@/components/molecules/cardItem';
+import { useNavigate } from 'react-router-dom';
 
 export const Contacts = () => {
   const [search, setSearch] = React.useState('');
 
+  const navigate = useNavigate();
+
   const { getContacts, contacts } = useContactsStore();
-  console.log('🚀 ~ Contacts ~ contacts:', contacts);
+
+  const contactsFiltered = contacts.filter((contact) =>
+    contact.fullname.toLowerCase().includes(search.toLowerCase())
+  );
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
+  };
+
+  const handleClickChat = (userId: string) => {
+    navigate(`/chat/${userId}`);
   };
 
   useEffect(() => {
@@ -34,13 +44,25 @@ export const Contacts = () => {
             handleChange={handleSearch}
           />
           <section>
-            <h2>Todos</h2>
+            <h3 className="list-title">Todos</h3>
             <ul>
-              {contacts.map((contact) => (
-                <li key={contact.user_id}>
-                  <p>{contact.fullname}</p>
-                </li>
-              ))}
+              {search.length > 0
+                ? contactsFiltered.map((contact) => (
+                    <CardItem
+                      user={contact}
+                      key={contact.user_id}
+                      Icon={MessageCircleMore}
+                      handleClick={() => handleClickChat(contact.user_id)}
+                    />
+                  ))
+                : contacts.map((contact) => (
+                    <CardItem
+                      user={contact}
+                      key={contact.user_id}
+                      Icon={MessageCircleMore}
+                      handleClick={() => handleClickChat(contact.user_id)}
+                    />
+                  ))}
             </ul>
           </section>
         </section>

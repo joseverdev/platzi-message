@@ -1,12 +1,12 @@
 import React from 'react';
-import { Search } from '../molecules/Search/Search';
+import { Search } from '@/components/molecules/Search';
 
 import './MainHeader.css';
 
 // import { AddIcon } from '../Icons/AddIcon';
 // import { useAnimateButtons } from '../../routes/useAnimateButtons';
-import { useAuthStore } from '../../store/useAuthStore';
-import astronauta from '../../assets/images/astronauta.png';
+import { useAuthStore } from '@/store/useAuthStore';
+import astronauta from '@/assets/images/astronauta.png';
 import { useNavigate } from 'react-router-dom';
 import { UserRoundPlus } from 'lucide-react';
 

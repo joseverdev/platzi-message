@@ -60,7 +60,6 @@ router.get(
   passport.authenticate('jwt', { session: false }),
   async (req, res, next) => {
     try {
-      const user = req.user;
       const contacts = await contactService.allContacts(req.user.sub);
 
       res.json({

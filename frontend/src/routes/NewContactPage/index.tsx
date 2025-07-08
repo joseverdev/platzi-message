@@ -1,6 +1,6 @@
 import { MainLayout } from '../../components/templates/MainLayout/MainLayout';
 
-import './NewContactPage.css';
+import './index.css';
 import { useEffect, useState } from 'react';
 import { useAuthStore } from '../../store/useAuthStore';
 import astronauta from '../../assets/images/astronauta.png';
@@ -75,6 +75,7 @@ function NewContactPage() {
                       <CardItem
                         user={user}
                         handleClick={() => hanldeAddContact}
+                        Icon={UserPlus}
                       />
                     </li>
                   ))
@@ -85,12 +86,16 @@ function NewContactPage() {
           </section>
           {search.length === 0 && (
             <section className="suggested">
-              <p className="suggested__title">
+              <h3 className="list-title">
                 <Users size={18} />
                 Usuarios sugeridos
-              </p>
+              </h3>
               {usersStore.slice(0, 4).map((user) => (
-                <CardItem user={user} handleClick={() => hanldeAddContact} />
+                <CardItem
+                  user={user}
+                  handleClick={() => hanldeAddContact}
+                  Icon={UserPlus}
+                />
               ))}
             </section>
           )}
@@ -101,18 +106,3 @@ function NewContactPage() {
 }
 
 export { NewContactPage };
-{
-  /* <article key={user.user_id} className="card">
-                  <img
-                    className="card__avatar"
-                    src={user.avatar || astronauta}
-                    alt={`${user.fullname} avatar`}
-                  />
-                  <div>
-                    <p>{user.fullname}</p>
-                  </div>
-                  <button onClick={hanldeAddContact} className="card__button">
-                    <UserPlus size={18} />
-                  </button>
-                </article> */
-}

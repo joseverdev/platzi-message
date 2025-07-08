@@ -25,6 +25,7 @@ const contactService = {
           type: sequelize.QueryTypes.SELECT,
         },
       );
+      console.log("🚀 ~ allContacts: ~ contacts:", contacts)
 
       return contacts;
     } catch (error) {

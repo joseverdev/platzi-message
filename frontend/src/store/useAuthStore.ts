@@ -4,6 +4,8 @@ import { axiosInstance } from "../utils/axios";
 import toast from "react-hot-toast";
 import axios from "axios";
 
+import type { TUser as User } from "@/types/user.types";
+
 export type SignupFormData = {
   fullname: string;
   email: string;
@@ -15,15 +17,6 @@ export type LoginFormData = {
   password: string;
 };
 
-interface User {
-  user_id: string;
-  username: string;
-  name: string;
-  email: string;
-  profilePic: string | null;
-  created_at: string;
-}
-
 interface ApiResponse<T = any> {
   error: boolean;
   message: string;
@@ -31,18 +24,11 @@ interface ApiResponse<T = any> {
 }
 
 interface AuthStore {
-  // Estado
   user: User | null;
   users: User[];
   isChekingAuth: boolean;
   isLogin: boolean;
 
-  // Métodos mock
-  // mockLogin: () => void;
-  // mockSignup: (data: SignupFormData) => ApiResponse<User>;
-  // mockCheckAuth: () => void;
-
-  // Métodos reales
   signup: (data: SignupFormData) => Promise<ApiResponse<User>>;
   login: (data: LoginFormData) => Promise<void>;
   updateProfilePicture: (data: { profilePic: string }) => Promise<void>;

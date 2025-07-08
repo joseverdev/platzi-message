@@ -3,29 +3,21 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { axiosInstance } from "../utils/axios";
 
-export interface User {
-  user_id: string;
-  fullname: string;
-  email: string;
-  avatar: string | null;
-  created_at: string;
-  isOnline?: boolean;
-  lastSeen?: string;
-}
+import type { TUser } from "@/types/user.types";
 
 interface UsersStore {
-  users: User[];
-  contacts: User[];
+  users: TUser[];
+  contacts: TUser[];
   isLoading: boolean;
-  selectedUser: User | null;
+  selectedUser: TUser | null;
 
   // Acciones
   getAllUsers: () => Promise<void>;
   // getContacts: () => Promise<void>;
-  searchUsers: (query: string) => User[];
+  searchUsers: (query: string) => TUser[];
   addContact: (userId: string) => Promise<void>;
   removeContact: (userId: string) => Promise<void>;
-  setSelectedUser: (user: User | null) => void;
+  setSelectedUser: (user: TUser | null) => void;
   updateUserStatus: (userId: string, isOnline: boolean) => void;
 }
 
@@ -41,7 +33,6 @@ export const useUsersStore = create<UsersStore>()(
         set({ isLoading: true });
         try {
           const res = await axiosInstance.get("/users");
-          // console.log("🚀 ~ getAllUsers: ~ res:", res)
           set({ users: res.data });
         } catch (error) {
           console.log("Error fetching users", error);
@@ -50,17 +41,17 @@ export const useUsersStore = create<UsersStore>()(
         }
       },
 
-      // getContacts: async () => {
-      //   set({ isLoading: true });
-      //   try {
-      //     const res = await axiosInstance.get("/users/contacts");
-      //     set({ contacts: res.data });
-      //   } catch (error) {
-      //     console.log("Error fetching contacts", error);
-      //   } finally {
-      //     set({ isLoading: false });
-      //   }
-      // },
+      /* getContacts: async () => {
+        set({ isLoading: true });
+        try {
+          const res = await axiosInstance.get("/users/contacts");
+          set({ contacts: res.data });
+        } catch (error) {
+          console.log("Error fetching contacts", error);
+        } finally {
+          set({ isLoading: false });
+        }
+      }, */
 
       searchUsers: (query: string) => {
         const { users } = get();

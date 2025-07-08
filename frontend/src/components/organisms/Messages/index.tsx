@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
-import './Messages.css';
+import './index.css';
 import { Message } from '../../molecules/Message';
-import { axiosInstance } from '../../../utils/axios';
 import { useAuthStore } from '../../../store/useAuthStore';
 import { useNavigate } from 'react-router-dom';
 import { UserRoundPlus } from 'lucide-react';
+import { useConversationsStore } from '@/store/useConversationsStore';
 
 function Messages() {
   const [chatList, setChatList] = useState([]);
@@ -13,29 +13,22 @@ function Messages() {
   const navigate = useNavigate();
   const { user } = useAuthStore();
 
+  const { getAllConversations, conversations } = useConversationsStore();
+  console.log('🚀 ~ Messages ~ conversations:', conversations);
+
   useEffect(() => {
-    // axiosInstance
-    //   .get("/messages/chat/" + user.user_id)
-    //   .then((res) => {
-    //     setChatList(res.data);
-    //   })
-    //   .catch((error) => {
-    //     console.log("Error in Messages", error);
-    //   });
-  }, [user.user_id]);
+    getAllConversations();
+  }, []);
 
   return (
     <section className="messages-container">
-      {chatList?.length > 0 ? (
-        chatList.map((chat) => (
+      {conversations?.length > 0 ? (
+        conversations.map((conversation) => (
           <Message
-            key={chat.other_user_id}
-            user={chat}
-            text={chat.text}
-            className={
-              user.user_id !== chat.last_sender_id ? 'message-received' : ''
-            }
-            onClick={() => navigate(`/chat/${chat.other_user_id}`)}
+            key={conversation._id}
+            user={conversation.participants[1]}
+            lastMessage={conversation.last_message}
+            onClick={() => navigate(`/chat/${conversation.other_user_id}`)}
           />
         ))
       ) : (

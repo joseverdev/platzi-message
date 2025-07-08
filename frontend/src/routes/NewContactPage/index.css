@@ -1,0 +1,50 @@
+.new-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.new-contact__header {
+  margin-top: 2rem;
+}
+.new-contact__search {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  margin-top: 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: var(--primary-color);
+}
+.new-contact__search:active {
+  background-color: #78a924;
+  color: var(--font-color);
+}
+.new-contact__back-button {
+  margin-bottom: 40px;
+}
+.search-contact {
+  padding: 1rem;
+  border: none;
+}
+.suggested {
+  border: 1px solid var(--border-gray);
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: var(--bg-gray);
+}
+.list__item {
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+.list__item:hover {
+  background-color: var(--primary-07-color);
+  color: var(--font-color);
+}
+
+@media screen and (min-width: 768px) {
+  .card__avatar {
+    width: 100px;
+    height: 100px;
+  }
+}

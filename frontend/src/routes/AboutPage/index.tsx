@@ -1,7 +1,7 @@
-import React from "react";
-import { MainLayout } from "../../components/templates/MainLayout/MainLayout";
-import { AboutHeader } from "../../components/AboutHeader";
-import { AboutContent } from "../../components/organisms/AboutContent/AboutContent";
+import React from 'react';
+import { MainLayout } from '../../components/templates/MainLayout/MainLayout';
+import { AboutHeader } from '@/components/organisms/AboutHeader';
+import { AboutContent } from '@/components/organisms/AboutContent';
 
 function AboutPage() {
   return (

@@ -2,11 +2,29 @@ const express = require('express');
 const passport = require('passport');
 const MessageService = require('../services/message.service');
 
-const messageService = new MessageService();
 const router = express.Router();
 
+router.post(
+  '/',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res) => {
+    try {
+      const data = await MessageService.create(req);
 
-router.get('/chat/:senderId/:receiverId',
+      res.status(201).json({
+        success: true,
+        data,
+        message: 'Message sent successfully',
+      });
+    } catch (error) {
+      console.log('Error in /messages router file', error);
+      res.status(500).json('Internal Server Error');
+    }
+  },
+);
+
+/* router.get(
+  '/chat/:senderId/:receiverId',
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     try {
@@ -14,12 +32,16 @@ router.get('/chat/:senderId/:receiverId',
       const messages = await messageService.findByChat(senderId, receiverId);
       res.json(messages);
     } catch (error) {
-      console.log('Error in /messages/chat/:senderId/:receiverId router file', error);
+      console.log(
+        'Error in /messages/chat/:senderId/:receiverId router file',
+        error,
+      );
       res.status(500).json('Internal Server Error');
     }
-  }
-);
-router.get('/chat/:userId',
+  },
+); */
+/* router.get(
+  '/chat/:userId',
   passport.authenticate('jwt', { session: false }),
   async (req, res) => {
     try {
@@ -31,9 +53,7 @@ router.get('/chat/:userId',
       console.log('Error in /messages/chat/:userId router file', error);
       res.status(500).json('Internal Server Error');
     }
-  }
-)
-
-
+  },
+); */
 
 module.exports = router;

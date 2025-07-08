@@ -10,12 +10,13 @@
   --primary-color: #193caf;
   --primary-07-color: rgb(138, 185, 57, 0.7);
   --secondary-color: #059669;
-  --tertiary-color: #121f3d;
-  --message-color: #182c57;
+  --tertiary-color: #12295e;
+  --message-color: #373d4d;
 
   --bg-blue: #2554d6;
 
   --border-gray: #3b434c;
+  --border-gray-light: #445a74;
   --bg-gray: #3b434c25;
   --bg-md-gray: #48515c55;
 
@@ -42,6 +43,16 @@ ul {
 
 h2 {
   font-size: 1.3rem;
+}
+
+.list-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--font-color);
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
 
 button,
@@ -72,7 +83,7 @@ a {
   border-radius: 18px;
   height: 50px;
   width: 50px;
-  border: 1px solid var(--secondary-color);
+  /* border: 1px solid var(--secondary-color); */
   display: flex;
   align-items: center;
   justify-content: center;

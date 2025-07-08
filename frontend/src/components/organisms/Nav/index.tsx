@@ -20,7 +20,7 @@ export const Nav = () => {
           </li>
           <li>
             <NavLink
-              to="/chat"
+              to="/home"
               className={({ isActive }) =>
                 isActive ? 'nav-link active' : 'nav-link'
               }
