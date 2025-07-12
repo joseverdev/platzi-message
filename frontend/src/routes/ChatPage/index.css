@@ -1,8 +1,7 @@
-.chat-page{
-  /* position: relative; */
-
+.chat {
+  width: 100%;
 }
-.chat__container{
+.chat__container {
   overflow-y: auto;
   scroll-behavior: smooth;
   /* margin-bottom: 70px; */
@@ -20,5 +19,10 @@
 }
 
 .chat__container::-webkit-scrollbar-thumb:hover {
-  background: rgba(136, 136, 136, 0.6); /* Se vuelve más visible al pasar el mouse */
+  background: rgba(
+    136,
+    136,
+    136,
+    0.6
+  ); /* Se vuelve más visible al pasar el mouse */
 }

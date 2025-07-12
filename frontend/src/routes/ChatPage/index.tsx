@@ -17,15 +17,21 @@ import { useConversationsStore } from '@/store/useConversationsStore';
 function ChatPage() {
   const chatContainerRef = useRef<HTMLElement>(null);
   const { id } = useParams();
-  const [socket, setSocket] = useState(null);
-  const [userChat, setUserChat] = useState<TUser | null>(null);
+  // console.log('🚀 ~ ChatPage ~ id:', id);
 
+  const [socket, setSocket] = useState(null);
+  const [otherUser, setOtherUser] = useState<TUser | null>(null);
 
   const { users, getAllUsers } = useAuthStore();
-  const [messages, setMessages] = useState([]);
   const { user } = useAuthStore();
 
-    
+  const {
+    messages,
+    addMessage,
+    selectedConversation,
+    getSelectedConversation,
+    getMessagesByConversationId,
+  } = useConversationsStore();
 
   const scrollToBottom = () => {
     setTimeout(() => {
@@ -37,35 +43,42 @@ function ChatPage() {
   };
 
   useEffect(() => {
-    scrollToBottom();
-  }, []);
-
-  useEffect(() => {
-    getAllUsers();
-  }, [getAllUsers]);
-
-  useEffect(() => {
-    if (users.length > 0) {
-      const foundUser = users.find((user) => user.user_id == id);
-      if (foundUser) setUserChat(foundUser);
+    if (id) {
+      getSelectedConversation(id);
+      getMessagesByConversationId(id);
     }
-  }, [users, id]);
+  }, [id]);
+
+  useEffect(() => {
+    if (selectedConversation && users.length > 0 && user) {
+      const otherUserId = selectedConversation.participants.find(
+        (participandId) => participandId !== user.user_id
+      );
+      const otherUserData = users.find((u) => u.user_id === otherUserId);
+      setOtherUser(otherUserData);
+    }
+  }, [selectedConversation, users, user]);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages.length]);
 
   useEffect(() => {
     const newSocket = io('http://localhost:3000', {
       withCredentials: true,
     });
 
-    newSocket.on('connect', () => {
-      console.log('Connected to server');
+    newSocket.on('connect', (socket) => {
+      console.log('Connected to server', socket);
     });
 
-    if (userChat) {
+    if (otherUser) {
       newSocket.emit('join', user?.user_id);
     }
 
     newSocket.on('receive_message', (data) => {
-      setMessages((prevMessages) => [...prevMessages, data]);
+      console.log('🚀 ~ newSocket.on ~ data:', data);
+      addMessage(data);
       scrollToBottom();
     });
 
@@ -74,55 +87,45 @@ function ChatPage() {
     return () => {
       newSocket.close();
     };
-  }, [userChat, user.user_id]);
+  }, [otherUser, user.user_id]);
 
-  useEffect(() => {
-    if (userChat && user) {
-      axiosInstance
-        .get(`messages/chat/${user.user_id}/${userChat.user_id}`)
-        .then((res) => {
-          setMessages(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, [userChat, user, messages]);
-
- 
   return (
     <>
       <MainLayout>
         <section className="chat-page">
-          <ChatHeader user={userChat} />
+          <ChatHeader user={otherUser} />
           <main>
             <section className="chat">
               <div className="chat__container" ref={chatContainerRef}>
-                {messages.map((message, index) => {
-                  if (
-                    message.sender_id == user.user_id &&
-                    message.receiver_id == userChat.user_id
-                  ) {
-                    return (
-                      <MessageSend key={index} message={message} user={user} />
-                    );
-                  } else if (
-                    message.sender_id == userChat.user_id &&
-                    message.receiver_id == user.user_id
-                  ) {
-                    return (
-                      <MessageReceived
-                        key={index}
-                        message={message}
-                        user={userChat}
-                      />
-                    );
-                  }
-                })}
+                {messages.length > 0 ? (
+                  messages.map((message, index) => {
+                    if (message.sender_id === user.user_id) {
+                      return (
+                        <MessageSend
+                          key={index}
+                          message={message}
+                          user={user}
+                        />
+                      );
+                    } else {
+                      return (
+                        <MessageReceived
+                          key={index}
+                          message={message}
+                          user={otherUser}
+                        />
+                      );
+                    }
+                  })
+                ) : (
+                  <div className="chat__empty">
+                    <p>No hay mensajes</p>
+                  </div>
+                )}
               </div>
             </section>
           </main>
-          <Write userChat={userChat} socket={socket} />
+          <Write userChat={otherUser} socket={socket} conversationId={id} />
         </section>
       </MainLayout>
     </>

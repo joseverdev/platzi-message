@@ -17,31 +17,13 @@ const registerChatHandlers = (io) => {
       try {
         // Guardar el mensaje en la base de datos
 
-        console.log({
-          text: data.message,
-          sender_id: data.from.user_id,
-          receiver_id: data.to.user_id,
-        });
-
-        await messageService.create({
-          text: data.message,
-          sender_id: data.from.user_id,
-          receiver_id: data.to.user_id,
-        });
-
-        const messageToSend = {
-          from: data.from,
-          to: data.to,
-          message: data.message,
-          // id: savedMessage.id,
-          // createdAt: savedMessage.createdAt
-        };
+        const newMessage = await MessageService.create(data);
+        console.log('🚀 ~ socket.on ~ newMessage:', newMessage);
 
         // Enviamos el mensaje solo al destinatario específico usando su user_id
-        io.to(data.to.user_id).emit('receive_message', messageToSend);
+        io.to(data.receiver_id).emit('receive_message', newMessage);
 
-        // También enviamos una copia al remitente
-        socket.emit('receive_message', messageToSend);
+        socket.emit('receive_message', newMessage);
       } catch (error) {
         console.error('Error saving message:', error);
         socket.emit('message_error', {

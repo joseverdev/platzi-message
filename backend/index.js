@@ -4,7 +4,6 @@ const { Server } = require('socket.io');
 const { createServer } = require('http');
 const cors = require('cors');
 
-// Importar conexión MongoDB
 const { connectMongoDB } = require('./db/configMongo');
 
 const routes = require('./routes/routes.js');

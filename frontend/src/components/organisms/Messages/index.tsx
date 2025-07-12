@@ -1,23 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import './index.css';
 import { Message } from '../../molecules/Message';
-import { useAuthStore } from '../../../store/useAuthStore';
 import { useNavigate } from 'react-router-dom';
 import { UserRoundPlus } from 'lucide-react';
 import { useConversationsStore } from '@/store/useConversationsStore';
+import { useAuthStore } from '@/store/useAuthStore';
 
 function Messages() {
-  const [chatList, setChatList] = useState([]);
+  const [userId, setUserId] = useState<string | null>(null);
 
   const navigate = useNavigate();
-  const { user } = useAuthStore();
 
   const { getAllConversations, conversations } = useConversationsStore();
-  console.log('🚀 ~ Messages ~ conversations:', conversations);
+
+  const { user } = useAuthStore();
 
   useEffect(() => {
-    getAllConversations();
+    if (conversations.length === 0) {
+      getAllConversations();
+    }
+
+    if (conversations.length > 0) {
+      const conversationFound = conversations.find((conv) =>
+        conv.participants.includes(user.user_id)
+      );
+
+      const userId = conversationFound?.participants.find(
+        (id) => id !== user.user_id
+      );
+
+      setUserId(userId);
+    }
   }, []);
 
   return (
@@ -26,9 +40,9 @@ function Messages() {
         conversations.map((conversation) => (
           <Message
             key={conversation._id}
-            user={conversation.participants[1]}
+            user_id={userId}
             lastMessage={conversation.last_message}
-            onClick={() => navigate(`/chat/${conversation.other_user_id}`)}
+            onClick={() => navigate(`/chat/${conversation._id}`)}
           />
         ))
       ) : (
@@ -37,7 +51,6 @@ function Messages() {
             ¡Sin chats! Agrega amigos para empezar a conversar.
           </p>
           <button onClick={() => navigate('/agregar')} className="button__add">
-            {/* <AddIcon /> */}
             <UserRoundPlus size={48} />
           </button>
         </div>

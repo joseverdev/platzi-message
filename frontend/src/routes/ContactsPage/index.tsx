@@ -7,13 +7,20 @@ import { MessageCircleMore, Search } from 'lucide-react';
 import { useContactsStore } from '@/store/useContactsStore';
 import { CardItem } from '@/components/molecules/cardItem';
 import { useNavigate } from 'react-router-dom';
+import { useConversationsStore } from '@/store/useConversationsStore';
+import { useAuthStore } from '@/store/useAuthStore';
 
 export const Contacts = () => {
   const [search, setSearch] = React.useState('');
+  const [conversationId, setConversationId] = React.useState<string | null>(
+    null
+  );
 
   const navigate = useNavigate();
 
+  const { user } = useAuthStore();
   const { getContacts, contacts } = useContactsStore();
+  const { getAllConversations, conversations } = useConversationsStore();
 
   const contactsFiltered = contacts.filter((contact) =>
     contact.fullname.toLowerCase().includes(search.toLowerCase())
@@ -24,12 +31,25 @@ export const Contacts = () => {
   };
 
   const handleClickChat = (userId: string) => {
-    navigate(`/chat/${userId}`);
+    const conversationId = getConversationId(userId);
+    navigate(`/chat/${conversationId}`);
+  };
+
+  const getConversationId = (contactId) => {
+    const conversation = conversations.find((conv) =>
+      conv.participants.includes(contactId)
+    );
+    return conversation ? conversation._id : null;
   };
 
   useEffect(() => {
-    getContacts();
-  }, [getContacts]);
+    if (contacts.length === 0) {
+      getContacts();
+    }
+    if (conversations.length === 0) {
+      getAllConversations();
+    }
+  }, [contacts, conversations, getContacts, getAllConversations]);
 
   return (
     <MainLayout>

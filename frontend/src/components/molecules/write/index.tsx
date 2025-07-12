@@ -3,7 +3,7 @@ import './index.css';
 import { useAuthStore } from '../../../store/useAuthStore';
 import { Send } from 'lucide-react';
 
-function Write({ userChat, socket }) {
+function Write({ userChat, socket, conversationId }) {
   const [message, setMessage] = React.useState('');
 
   const { user } = useAuthStore();
@@ -13,15 +13,12 @@ function Write({ userChat, socket }) {
 
     if (socket && message) {
       socket.volatile.emit('send_message', {
-        from: {
-          user_id: user.user_id,
-          username: user.username,
-        },
-        to: {
-          user_id: userChat.user_id,
-          username: userChat.username,
-        },
-        message,
+        conversation_id: conversationId,
+        sender_id: user.user_id,
+        receiver_id: userChat.user_id,
+        content: message,
+        timestamp: new Date().toISOString(),
+        // Agrega otros campos requeridos por tu schema aquí si es necesario
       });
       setMessage('');
     }

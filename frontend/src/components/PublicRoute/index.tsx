@@ -5,7 +5,7 @@ export const PublicRoute = () => {
   const { user } = useAuthStore();
 
   if (user !== null) {
-    return <Navigate to={'/chat'} />;
+    return <Navigate to={'/home'} />;
   }
 
   return <Outlet />;

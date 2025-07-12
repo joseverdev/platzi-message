@@ -77,6 +77,7 @@ export const useAuthStore = create<AuthStore>()(
       },
 
       login: async (data: LoginFormData): Promise<void> => {
+        console.log("🚀 ~ login: ~ data:", data)
         set({ isLogin: true });
         try {
           const res = await axiosInstance.post("/auth/login", data);

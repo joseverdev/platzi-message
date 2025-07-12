@@ -1,4 +1,4 @@
-import './HomePage.css';
+import './index.css';
 
 import { MainHeader } from '@/components/organisms/MainHeader';
 import { MainLayout } from '../../components/templates/MainLayout/MainLayout';

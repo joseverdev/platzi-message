@@ -74,28 +74,6 @@ function LoginPage() {
               >
                 Crear cuenta
               </button>
-
-              {/* Mock login button for development */}
-              {isDevelopment && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    mockLogin();
-                    navigate('/chat');
-                  }}
-                  style={{
-                    background: '#ff6b6b',
-                    color: 'white',
-                    padding: '0.5rem',
-                    border: 'none',
-                    borderRadius: '4px',
-                    marginTop: '1rem',
-                    cursor: 'pointer',
-                  }}
-                >
-                  🚀 Mock Login (Dev)
-                </button>
-              )}
             </section>
           </div>
         </div>
