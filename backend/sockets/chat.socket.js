@@ -21,8 +21,8 @@ const registerChatHandlers = (io) => {
         console.log('🚀 ~ socket.on ~ newMessage:', newMessage);
 
         // Enviamos el mensaje solo al destinatario específico usando su user_id
-        io.to(data.receiver_id).emit('receive_message', newMessage);
-
+        // io.to(data.receiver_id).emit('receive_message', newMessage);
+        io.emit('receive_message', newMessage);
         socket.emit('receive_message', newMessage);
       } catch (error) {
         console.error('Error saving message:', error);

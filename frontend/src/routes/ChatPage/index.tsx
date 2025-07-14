@@ -17,13 +17,13 @@ import { useConversationsStore } from '@/store/useConversationsStore';
 function ChatPage() {
   const chatContainerRef = useRef<HTMLElement>(null);
   const { id } = useParams();
-  // console.log('🚀 ~ ChatPage ~ id:', id);
 
   const [socket, setSocket] = useState(null);
   const [otherUser, setOtherUser] = useState<TUser | null>(null);
 
   const { users, getAllUsers } = useAuthStore();
   const { user } = useAuthStore();
+  const { getAllConversations } = useConversationsStore();
 
   const {
     messages,
@@ -69,7 +69,7 @@ function ChatPage() {
     });
 
     newSocket.on('connect', (socket) => {
-      console.log('Connected to server', socket);
+      // console.log('Connected to server', socket);
     });
 
     if (otherUser) {
@@ -77,8 +77,9 @@ function ChatPage() {
     }
 
     newSocket.on('receive_message', (data) => {
-      console.log('🚀 ~ newSocket.on ~ data:', data);
+      // console.log('🚀 ~ newSocket.on ~ data:', data);
       addMessage(data);
+      getAllConversations();
       scrollToBottom();
     });
 

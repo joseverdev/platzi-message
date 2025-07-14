@@ -1,6 +1,6 @@
 import { MainLayout } from '../../components/templates/MainLayout/MainLayout';
+import './index.css';
 
-import './UserPage.css';
 import { useAuthStore } from '../../store/useAuthStore';
 import { useState } from 'react';
 import astronauta from '../../assets/images/astronauta.png';
@@ -64,7 +64,8 @@ function UserPage() {
             <figcaption>
               <div className="user-page__name-container">
                 <h2>
-                  <input
+                  {user?.fullname}
+                  {/* <input
                     id="name"
                     disabled
                     className="user-page__name"
@@ -73,7 +74,7 @@ function UserPage() {
                     value={name}
                     onChange={handleEdit}
                     onBlur={handleBlur}
-                  />
+                  /> */}
                 </h2>
                 <label htmlFor="name" onClick={handleClickIcon}>
                   {/* <EditIcon /> */}

@@ -1,7 +1,15 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { axiosInstance } from "../utils/axios";
-import { get } from "node_modules/axios/index.cjs";
+
+type Message = {
+  _id: string;
+  conversation_id: string;
+  sender_id: string;
+  content: string;
+  created_at: string;
+  type: string;
+};
 
 type Conversation = {
   _id: string;
@@ -18,27 +26,40 @@ type Conversation = {
 
 type ConversationsStore = {
   conversations: Conversation[];
+  messages: Message[];
   isLoading: boolean;
   selectedConversation: Conversation | null;
-  messages: any[];
 
-  getMessagesByConversationId: (conversationId: string) => Promise<void>;
+  // Acciones para conversaciones
   getAllConversations: () => Promise<void>;
   getSelectedConversation: (conversationId: string) => void;
+
+  // Acciones para mensajes
+  getMessagesByConversationId: (conversationId: string) => Promise<void>;
+  addMessage: (message: Message) => void;
+
+  // ✅ Nueva acción para actualizar last_message
+  // updateLastMessage: (conversationId: string, message: Message) => void;
 };
 
 export const useConversationsStore = create<ConversationsStore>()(
   persist(
     (set, get) => ({
       conversations: [],
+      messages: [],
       isLoading: false,
       selectedConversation: null,
-      messages: [],
 
-      addMessage: (message: any) => {
-        set((state) => ({
-          messages: [...state.messages, message],
-        }));
+      getAllConversations: async () => {
+        set({ isLoading: true });
+        try {
+          const { data } = await axiosInstance.get("/conversations");
+          set({ conversations: data.data });
+        } catch (error) {
+          console.error("Error fetching conversations", error);
+        } finally {
+          set({ isLoading: false });
+        }
       },
 
       getSelectedConversation: (conversationId: string) => {
@@ -48,23 +69,10 @@ export const useConversationsStore = create<ConversationsStore>()(
         if (conversation) {
           set({ selectedConversation: conversation });
         } else {
-          console.log("Conversation not found:", conversationId);
           set({ selectedConversation: null });
         }
       },
 
-      getAllConversations: async () => {
-        set({ isLoading: true });
-        try {
-          console.log("Fetching conversations...");
-          const { data } = await axiosInstance.get("/conversations");
-          set({ conversations: data.data });
-        } catch (error) {
-          console.error("Error fetching conversations", error);
-        } finally {
-          set({ isLoading: false });
-        }
-      },
       getMessagesByConversationId: async (conversationId: string) => {
         set({ isLoading: true });
         try {
@@ -79,15 +87,42 @@ export const useConversationsStore = create<ConversationsStore>()(
           set({ isLoading: false });
         }
       },
+
+      addMessage: (message: Message) => {
+        console.log("🚀 ~ addmessage:", message);
+        set((state) => ({
+          messages: [...state.messages, message],
+        }));
+        // get().getAllConversations();
+        // get().updateLastMessage(message.conversation_id, message);
+      },
+
+      // ✅ Actualizar el último mensaje de una conversación
+      /* updateLastMessage: (conversationId: string, message: Message) => {
+        set((state) => ({
+          conversations: state.conversations.map((conv) =>
+            conv._id === conversationId
+              ? {
+                  ...conv,
+                  last_message: {
+                    content: message.content,
+                    sender_id: message.sender_id,
+                    timestamp: message.created_at,
+                  },
+                  updated_at: new Date().toISOString(),
+                }
+              : conv
+          ),
+        }));
+      }, */
     }),
     {
       name: "conversations-storage",
       storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         conversations: state.conversations,
-        isLoading: state.isLoading,
-        selectedConversation: state.selectedConversation,
         messages: state.messages,
+        selectedConversation: state.selectedConversation,
       }),
     }
   )

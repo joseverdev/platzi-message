@@ -43,13 +43,14 @@ export const Contacts = () => {
   };
 
   useEffect(() => {
+    console.log('🚀 ~ Contacts ~ user:', user);
     if (contacts.length === 0) {
       getContacts();
     }
     if (conversations.length === 0) {
       getAllConversations();
     }
-  }, [contacts, conversations, getContacts, getAllConversations]);
+  }, [getContacts, getAllConversations]);
 
   return (
     <MainLayout>

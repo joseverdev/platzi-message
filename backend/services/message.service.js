@@ -42,6 +42,26 @@ const MessageService = {
       });
     }
 
+    console.log(
+      'both contacts:',
+      sender_id,
+      data.body?.receiver_id || data.receiver_id,
+    );
+
+    const contactExists = await models.Contact.findOne({
+      where: {
+        user_id: sender_id,
+        contact_id: data.body?.receiver_id || data.receiver_id,
+      },
+    });
+
+    if (!contactExists) {
+      await models.Contact.create({
+        user_id: sender_id,
+        contact_id: data.body?.receiver_id || data.receiver_id,
+      });
+    }
+
     const message = await Message.create({
       conversation_id: conversationId,
       sender_id: sender_id,

@@ -53,6 +53,7 @@
   align-items: center;
   justify-content:space-around;
   /* max-width: ; */
+  gap: 1rem;
 }
 
 .user-page__name,
