@@ -18,7 +18,6 @@ function Write({ userChat, socket, conversationId }) {
         receiver_id: userChat.user_id,
         content: message,
         timestamp: new Date().toISOString(),
-        // Agrega otros campos requeridos por tu schema aquí si es necesario
       });
       setMessage('');
     }

@@ -68,9 +68,9 @@ function ChatPage() {
       withCredentials: true,
     });
 
-    newSocket.on('connect', (socket) => {
-      // console.log('Connected to server', socket);
-    });
+    // newSocket.on('connect', (socket) => {
+    //   // console.log('Connected to server', socket);
+    // });
 
     if (otherUser) {
       newSocket.emit('join', user?.user_id);

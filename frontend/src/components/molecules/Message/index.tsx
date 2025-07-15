@@ -3,11 +3,23 @@ import './index.css';
 import { useAuthStore } from '@/store/useAuthStore';
 import { useEffect, useState } from 'react';
 
-function Message({ user_id, lastMessage, onClick }) {
-  const [isNewMessage, setIsNewMessage] = useState(true);
+interface MessageProps {
+  conversation: {
+    _id: string;
+    participants: string[];
+    last_message: {
+      content: string;
+      sender_id: string;
+    };
+  };
+  onClick: () => void;
+}
 
-  const { users, getAllUsers } = useAuthStore();
-  const user = users.find((u) => u.user_id === user_id);
+function Message({ conversation, onClick }: MessageProps) {
+  const [isNewMessage, setIsNewMessage] = useState(true);
+  const [otherUser, setOtherUser] = useState(null);
+
+  const { users, getAllUsers, user } = useAuthStore();
 
   useEffect(() => {
     if (users.length === 0) {
@@ -16,32 +28,43 @@ function Message({ user_id, lastMessage, onClick }) {
   }, [users, getAllUsers]);
 
   useEffect(() => {
-    if (lastMessage.sender_id !== user?.user_id) {
-      setIsNewMessage(false);
-    } else {
-      setIsNewMessage(true);
+    if (user && conversation.participants.length > 0) {
+
+      const otherUserId = conversation.participants.find(
+        (id) => id !== user.user_id
+      );
+
+      const foundUser = users.find((u) => u.user_id === otherUserId);
+      setOtherUser(foundUser);
     }
-  }, [lastMessage]);
+  }, [user, conversation.participants, users]);
+
+  useEffect(() => {
+    if (conversation.last_message.sender_id !== user?.user_id) {
+      setIsNewMessage(true);
+    } else {
+      setIsNewMessage(false);
+    }
+  }, [conversation.last_message, user]);
 
   return (
     <article onClick={onClick} className={`message`}>
       <figure className="message__user">
         <img
           className="message__image"
-          src={user?.avatar || astronauta}
+          src={otherUser?.avatar || astronauta}
           alt="logo"
         />
         <figcaption>
-          <p className="message__name">{user?.fullname || 'Anonimo'}</p>
+          <p className="message__name">{otherUser?.fullname || 'Anonimo'}</p>
           <p className="message__message">
-            {lastMessage.content || 'Dile Hola a tus amigos!'}
+            {conversation.last_message.content || 'Dile Hola a tus amigos!'}
           </p>
         </figcaption>
         <div className="new-message">
           <div
-            className={`new-message__icon ${
-              !isNewMessage && 'new-message__icon--inactive'
-            }`}
+            className={`new-message__icon ${!isNewMessage && 'new-message__icon--inactive'
+              }`}
           ></div>
         </div>
       </figure>

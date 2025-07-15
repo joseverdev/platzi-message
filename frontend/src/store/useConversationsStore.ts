@@ -30,16 +30,13 @@ type ConversationsStore = {
   isLoading: boolean;
   selectedConversation: Conversation | null;
 
-  // Acciones para conversaciones
   getAllConversations: () => Promise<void>;
   getSelectedConversation: (conversationId: string) => void;
 
-  // Acciones para mensajes
   getMessagesByConversationId: (conversationId: string) => Promise<void>;
   addMessage: (message: Message) => void;
 
-  // ✅ Nueva acción para actualizar last_message
-  // updateLastMessage: (conversationId: string, message: Message) => void;
+
 };
 
 export const useConversationsStore = create<ConversationsStore>()(
@@ -93,28 +90,8 @@ export const useConversationsStore = create<ConversationsStore>()(
         set((state) => ({
           messages: [...state.messages, message],
         }));
-        // get().getAllConversations();
-        // get().updateLastMessage(message.conversation_id, message);
       },
 
-      // ✅ Actualizar el último mensaje de una conversación
-      /* updateLastMessage: (conversationId: string, message: Message) => {
-        set((state) => ({
-          conversations: state.conversations.map((conv) =>
-            conv._id === conversationId
-              ? {
-                  ...conv,
-                  last_message: {
-                    content: message.content,
-                    sender_id: message.sender_id,
-                    timestamp: message.created_at,
-                  },
-                  updated_at: new Date().toISOString(),
-                }
-              : conv
-          ),
-        }));
-      }, */
     }),
     {
       name: "conversations-storage",

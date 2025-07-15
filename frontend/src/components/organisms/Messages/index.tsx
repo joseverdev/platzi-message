@@ -1,40 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import './index.css';
 import { Message } from '../../molecules/Message';
 import { useNavigate } from 'react-router-dom';
 import { UserRoundPlus } from 'lucide-react';
 import { useConversationsStore } from '@/store/useConversationsStore';
-import { useAuthStore } from '@/store/useAuthStore';
 import io from 'socket.io-client';
 
 function Messages() {
-  const [userId, setUserId] = useState<string | null>(null);
-
   const navigate = useNavigate();
 
-  const { messages, getAllConversations, conversations } =
-    useConversationsStore();
-
-  const { user } = useAuthStore();
+  const { getAllConversations, conversations } = useConversationsStore();
 
   useEffect(() => {
     getAllConversations();
-  }, []);
-
-  useEffect(() => {
-    if (conversations.length > 0) {
-      const conversationFound = conversations.find((conv) =>
-        conv.participants.includes(user.user_id)
-      );
-
-      const userId = conversationFound?.participants.find(
-        (id) => id !== user.user_id
-      );
-      // console.log('🚀 ~ useEffect ~ userId:', userId);
-
-      setUserId(userId);
-    }
   }, []);
 
   useEffect(() => {
@@ -42,11 +21,13 @@ function Messages() {
       withCredentials: true,
     });
 
-    // newSocket.on('connect', () => {});
-
     newSocket.on('receive_message', () => {
       getAllConversations();
     });
+
+    return () => {
+      newSocket.disconnect();
+    };
   }, []);
 
   return (
@@ -55,8 +36,7 @@ function Messages() {
         conversations.map((conversation) => (
           <Message
             key={conversation._id}
-            user_id={userId}
-            lastMessage={conversation.last_message}
+            conversation={conversation}
             onClick={() => navigate(`/chat/${conversation._id}`)}
           />
         ))
