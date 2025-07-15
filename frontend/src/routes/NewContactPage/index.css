@@ -1,7 +1,7 @@
 .new-contact {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
 }
 .new-contact__header {
   margin-top: 2rem;
@@ -32,6 +32,10 @@
   padding: 1rem;
   border-radius: 8px;
   background-color: var(--bg-gray);
+}
+.suggested__items{
+  height: 200px;
+  overflow-y: auto;
 }
 .list__item {
   cursor: pointer;

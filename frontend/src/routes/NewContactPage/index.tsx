@@ -70,7 +70,7 @@ function NewContactPage() {
                     <li
                       key={user.user_id}
                       className="list__item"
-                      // onClick={() => handleClickUser(user.user_id)}
+                    // onClick={() => handleClickUser(user.user_id)}
                     >
                       <CardItem
                         user={user}
@@ -90,13 +90,16 @@ function NewContactPage() {
                 <Users size={18} />
                 Usuarios sugeridos
               </h3>
-              {usersStore.slice(0, 4).map((user) => (
-                <CardItem
-                  user={user}
-                  handleClick={() => hanldeAddContact}
-                  Icon={UserPlus}
-                />
-              ))}
+              <div className="suggested__items">
+
+                {usersStore.slice(0, 4).map((user) => (
+                  <CardItem
+                    user={user}
+                    handleClick={() => hanldeAddContact}
+                    Icon={UserPlus}
+                  />
+                ))}
+              </div>
             </section>
           )}
         </section>
