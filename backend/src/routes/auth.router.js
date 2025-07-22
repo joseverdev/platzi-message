@@ -1,13 +1,14 @@
 const express = require('express');
 const passport = require('passport');
 
-const validatorHandler = require('../middlewares/validatorHandler');
+const validatorHandler = require('@middlewares/validatorHandler');
 const { createUserSchema } = require('../schemas/user.schema');
 const authRouter = express.Router();
 const AuthService = require('../services/auth.service');
-const { jwtSecret } = require('../config/config');
+const {
+  auth: { jwtSecret },
+} = require('@config');
 const jwt = require('jsonwebtoken');
-const authService = new AuthService();
 
 authRouter.post(
   '/signup',
@@ -16,7 +17,7 @@ authRouter.post(
     try {
       const body = req.body;
       body.email = body.email.toLowerCase();
-      const userExist = await authService.findByEmail(body.email);
+      const userExist = await AuthService.findByEmail(body.email);
       if (userExist) {
         return res.status(409).json({
           message:
@@ -24,7 +25,7 @@ authRouter.post(
         });
       }
 
-      const newUser = await authService.create(body);
+      const newUser = await AuthService.create(body);
       res.status(201).json(newUser);
     } catch (error) {
       next(error);
@@ -65,7 +66,7 @@ authRouter.put(
     try {
       const { profilePic } = req.body;
 
-      const response = await authService.updateProfile(profilePic, req.user);
+      const response = await AuthService.updateProfile(profilePic, req.user);
 
       res.json(response);
     } catch (error) {
@@ -83,7 +84,7 @@ authRouter.get(
       const token = req.cookies.jwt_chat;
       const payload = jwt.verify(token, jwtSecret);
       // console.log('payload', payload);
-      const user = await authService.find(payload.username);
+      const user = await AuthService.find(payload.username);
       delete user.dataValues.password;
       // console.log('token', token);
       // console.log('user', user.dataValues);

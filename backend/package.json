@@ -2,9 +2,23 @@
   "name": "back",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
+  "_moduleAliases": {
+    "@": "./src",
+    "@config": "./src/config",
+    "@models": "./src/models",
+    "@services": "./src/services",
+    "@controllers": "./src/controllers",
+    "@middlewares": "./src/middlewares",
+    "@utils": "./src/utils",
+    "@routes": "./src/routes",
+    "@schemas": "./src/schemas",
+    "@database": "./database"
+
+  },
   "scripts": {
-    "dev": "node --watch index.js",
+    "dev": "NODE_ENV=dev node --watch server.js",
+    "prod": "NODE_ENV=prod node server.js",
     "migrations:generate": "sequelize-cli migration:generate --name",
     "migrations:run": "sequelize-cli db:migrate",
     "migrations:undo": "sequelize-cli db:migrate:undo",
@@ -24,6 +38,7 @@
     "express": "4.19.2",
     "joi": "17.13.3",
     "jsonwebtoken": "9.0.2",
+    "module-alias": "^2.2.3",
     "mongoose": "^8.16.2",
     "morgan": "1.10.0",
     "passport": "0.7.0",

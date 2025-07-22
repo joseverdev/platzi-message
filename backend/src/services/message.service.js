@@ -1,8 +1,9 @@
-const { sequelize } = require('../libs/sequelize.js');
-const { createMessageSchema } = require('../schemas/message.schema');
+const { sequelize } = require('@database/config/postgres.js');
+
+const { createMessageSchema } = require('../schemas/message.schema.js');
 const boom = require('@hapi/boom');
-const Conversation = require('../db/models/mongo/conversation.model');
-const Message = require('../db/models/mongo/message.model');
+const Conversation = require('@models/nosql/conversation.model.js');
+const Message = require('@models/nosql/message.model');
 const { default: mongoose } = require('mongoose');
 
 const { models } = sequelize;

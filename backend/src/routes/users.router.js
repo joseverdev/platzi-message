@@ -1,14 +1,12 @@
 const express = require('express');
-const UserService = require('../services/user.service.js');
-const {
-  getUserSchema,
-  updateUserSchema,
-} = require('../schemas/user.schema.js');
-const validatorHandler = require('../middlewares/validatorHandler.js');
+// const UserService = require('@services/user.service.js');
+const UserService = require('../../database/config/postgres');
+const { getUserSchema, updateUserSchema } = require('@schemas/user.schema.js');
+const validatorHandler = require('@/middlewares/validatorHandler.js');
 const passport = require('passport');
 
 const router = express.Router();
-const service = new UserService();
+// const service = new UserService();
 
 router.get(
   '/',

@@ -4,7 +4,7 @@ const { Server } = require('socket.io');
 const { createServer } = require('http');
 const cors = require('cors');
 
-const { connectMongoDB } = require('./db/configMongo');
+const { connectMongoDB } = require('./database/config/mongodb');
 
 const routes = require('./routes/routes.js');
 const { checkApiKey } = require('./middlewares/auth.handler.js');

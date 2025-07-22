@@ -3,7 +3,6 @@ const boom = require('@hapi/boom');
 const bcrypt = require('bcrypt');
 
 const AuthService = require('../../services/auth.service');
-const authService = new AuthService();
 
 const LocalStrategy = new Strategy(
   { usernameField: 'email' },
@@ -11,7 +10,7 @@ const LocalStrategy = new Strategy(
     try {
       const emailLower = email.toLowerCase();
 
-      const user = await authService.findByEmail(emailLower);
+      const user = await AuthService.findByEmail(emailLower);
       // console.log('🚀 ~ LocalStrategy ~ user:', user);
 
       if (!user) {

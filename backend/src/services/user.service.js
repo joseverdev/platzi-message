@@ -1,4 +1,4 @@
-const { sequelize } = require('../libs/sequelize.js');
+const { sequelize } = require('@database/config/postgres.js');
 const boom = require('@hapi/boom');
 
 const { models } = sequelize;

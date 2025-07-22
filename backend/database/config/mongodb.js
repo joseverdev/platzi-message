@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 const connectMongoDB = async () => {
   try {
     const mongoUri =
-      process.env.MONGO_URI || 'mongodb://localhost:27017/message_app';
+      process.env.MONGO_URI;
     await mongoose.connect(mongoUri);
-    console.log('✅ MongoDB connected successfully');
+    // console.log('✅ MongoDB connected successfully');
 
     // Eventos de conexión
     mongoose.connection.on('error', (err) => {

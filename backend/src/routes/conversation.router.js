@@ -1,6 +1,6 @@
 const express = require('express');
 const passport = require('passport');
-const Conversation = require('../db/models/mongo/conversation.model');
+const Conversation = require('@models/nosql/conversation.model');
 const MessageService = require('../services/message.service');
 
 const router = express.Router();
