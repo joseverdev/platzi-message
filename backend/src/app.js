@@ -10,7 +10,7 @@ const { errorHandler } = require('@middlewares/error.handler');
 const config = require('@config');
 const app = express();
 
-const whiteList = [`${config.fronendUrl}`];
+const whiteList = [`${config.frontendUrl}`];
 const options = {
   origin: (origin, callback) => {
     if (whiteList.includes(origin) || !origin) {
