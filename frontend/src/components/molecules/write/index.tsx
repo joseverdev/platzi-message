@@ -2,11 +2,14 @@ import React from 'react';
 import './index.css';
 import { useAuthStore } from '../../../store/useAuthStore';
 import { Send } from 'lucide-react';
+import { useConversationsStore } from '@/store/useConversationsStore';
 
 function Write({ userChat, socket, conversationId }) {
   const [message, setMessage] = React.useState('');
 
   const { user } = useAuthStore();
+
+  const { getMessagesByConversationId } = useConversationsStore();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,7 +22,9 @@ function Write({ userChat, socket, conversationId }) {
         content: message,
         timestamp: new Date().toISOString(),
       });
+
       setMessage('');
+      getMessagesByConversationId(conversationId);
     }
   };
 

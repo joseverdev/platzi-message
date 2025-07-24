@@ -9,14 +9,13 @@ import { useAuthStore } from '../../store/useAuthStore';
 import { MessageReceived } from '../../components/molecules/MessageReceived';
 import { MessageSend } from '../../components/molecules/MessageSend';
 import io from 'socket.io-client';
-import { axiosInstance } from '../../utils/axios';
 
 import type { TUser } from '@/types/user.types';
 import { useConversationsStore } from '@/store/useConversationsStore';
 
 function ChatPage() {
   const chatContainerRef = useRef<HTMLElement>(null);
-  const { id } = useParams();
+  const { id: conversationId } = useParams();
 
   const [socket, setSocket] = useState(null);
   const [otherUser, setOtherUser] = useState<TUser | null>(null);
@@ -39,15 +38,18 @@ function ChatPage() {
         chatContainerRef.current.scrollTop =
           chatContainerRef.current.scrollHeight;
       }
+      if (users.length === 0) {
+        getAllUsers();
+      }
     }, 100);
   };
 
   useEffect(() => {
-    if (id) {
-      getSelectedConversation(id);
-      getMessagesByConversationId(id);
+    if (conversationId) {
+      getSelectedConversation(conversationId);
+      getMessagesByConversationId(conversationId);
     }
-  }, [id]);
+  }, [conversationId]);
 
   useEffect(() => {
     if (selectedConversation && users.length > 0 && user) {
@@ -64,32 +66,58 @@ function ChatPage() {
   }, [messages.length]);
 
   useEffect(() => {
+    if (!user?.user_id || !conversationId) return;
+
     const newSocket = io('http://localhost:3000', {
       withCredentials: true,
     });
 
-    // newSocket.on('connect', (socket) => {
-    //   // console.log('Connected to server', socket);
-    // });
-
-    if (otherUser) {
+    newSocket.on('connect', () => {
+      console.log('Connected to server', newSocket);
       newSocket.emit('join', user?.user_id);
-    }
+      newSocket.emit('join_conversation', conversationId);
+    });
+    newSocket.on('disconnect', () => {
+      console.log('Disconnected from server');
+    });
+    newSocket.on('connect_error', (err) => {
+      console.error('Connection error:', err);
+    });
 
     newSocket.on('receive_message', (data) => {
-      // console.log('🚀 ~ newSocket.on ~ data:', data);
-      addMessage(data);
+      console.log('RECEIVE MESSAGE EVENT TRIGERED', data);
+
+      if (data.conversation_id === conversationId) {
+        console.log('Mensaje recibido en la conversación actual:', data);
+        addMessage(data);
+        scrollToBottom();
+      } else {
+        console.log('Mensaje recibido en otra conversación, ignorando');
+        getAllConversations();
+        return;
+      }
+
+      // getMessagesByConversationId(conversationId);
+      // getAllConversations();
+    });
+
+    newSocket.on('conversation_updated', (data) => {
+      console.log('🚀 ~ newSocket.on ~ conversation_updated:', data);
       getAllConversations();
-      scrollToBottom();
     });
 
     setSocket(newSocket);
 
     return () => {
+      console.log('Disconnecting socket');
+      newSocket.emit('leave_conversation', conversationId);
       newSocket.close();
     };
-  }, [otherUser, user.user_id]);
+  }, [user?.user_id, conversationId]);
 
+  useEffect(() => {
+    console.log('🚀 ~ ChatPage component re-renderred ~ messages:', messages);
+  }, [messages]);
   return (
     <>
       <MainLayout>
@@ -126,7 +154,11 @@ function ChatPage() {
               </div>
             </section>
           </main>
-          <Write userChat={otherUser} socket={socket} conversationId={id} />
+          <Write
+            userChat={otherUser}
+            socket={socket}
+            conversationId={conversationId}
+          />
         </section>
       </MainLayout>
     </>

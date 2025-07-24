@@ -1,19 +1,17 @@
 const express = require('express');
-// const UserService = require('@services/user.service.js');
-const UserService = require('../../database/config/postgres');
+const UserService = require('@services/user.service.js');
 const { getUserSchema, updateUserSchema } = require('@schemas/user.schema.js');
 const validatorHandler = require('@/middlewares/validatorHandler.js');
 const passport = require('passport');
 
 const router = express.Router();
-// const service = new UserService();
 
 router.get(
   '/',
   passport.authenticate('jwt', { session: false }),
   async (req, res, next) => {
     try {
-      const users = await service.find();
+      const users = await UserService.find();
 
       const safeUsers = users.map((user) => {
         delete user.password;
@@ -30,7 +28,7 @@ router.get(
 router.get('/:id', validatorHandler(getUserSchema), async (req, res, next) => {
   try {
     const { id } = req.params;
-    const user = await service.findOne(id);
+    const user = await UserService.findOne(id);
     res.json(user);
   } catch (err) {
     next(err);
@@ -45,7 +43,7 @@ router.patch(
     try {
       const { id } = req.params;
       const body = req.body;
-      const user = await service.update(id, body);
+      const user = await UserService.update(id, body);
       delete user.dataValues.password;
       res.json(user);
     } catch (err) {
@@ -61,7 +59,7 @@ router.delete(
   async (req, res, next) => {
     try {
       const { id } = req.params;
-      const user = await service.delete(id);
+      const user = await UserService.delete(id);
       res.send(`Elemento con id ${user.id} eliminado`);
     } catch (err) {
       next(err);

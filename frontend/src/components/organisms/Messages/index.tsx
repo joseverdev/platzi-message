@@ -25,6 +25,11 @@ function Messages() {
       getAllConversations();
     });
 
+    newSocket.on('conversations_updated', (data) => {
+      console.log('Conversations updated', data);
+      // getAllConversations();
+    });
+
     return () => {
       newSocket.disconnect();
     };

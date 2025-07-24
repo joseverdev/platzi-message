@@ -71,11 +71,13 @@ export const useConversationsStore = create<ConversationsStore>()(
       },
 
       getMessagesByConversationId: async (conversationId: string) => {
+        // console.log("getMessagesByConversationId:", conversationId);
         set({ isLoading: true });
         try {
           const { data } = await axiosInstance.get(
             `/conversations/${conversationId}`
           );
+          console.log("🚀 ~ getMessagesByConversationId ~ data:", data);
           set({ messages: data.data });
         } catch (error) {
           console.error("Error fetching messages", error);

@@ -8,7 +8,6 @@ const validatorHandler = require('../middlewares/validatorHandler');
 const { createContactSchema } = require('../schemas/contact.schema');
 
 const router = express.Router();
-const userService = new UserService();
 
 router.post(
   '/add',
@@ -24,8 +23,8 @@ router.post(
         );
       }
 
-      await userService.findById(user_id);
-      await userService.findById(contact_id);
+      await UserService.findById(user_id);
+      await UserService.findById(contact_id);
 
       const isAlreadyContact = await contactService.checkIfContact(
         user_id,
